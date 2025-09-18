@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
@@ -96,7 +97,7 @@ describe('InsightCard', () => {
     expect(screen.getByText('Cargando datos de análisis...').parentElement?.querySelector('.animate-spin')).toBeInTheDocument();
   });
 
-  it('shows error state when API fails', () => {
+  it('shows error state when API fails', async () => {
     const store = createTestStore({
       analytics: {
         data: null,
@@ -108,12 +109,15 @@ describe('InsightCard', () => {
     
     render(<InsightCard />, { wrapper: createWrapper(store) });
     
+    // Wait for the error state to appear after useEffect runs
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
     expect(screen.getByText('Error al cargar los datos')).toBeInTheDocument();
     expect(screen.getByText('Ha ocurrido un error al cargar los datos de análisis.')).toBeInTheDocument();
     expect(screen.getByText('Reintentar')).toBeInTheDocument();
   });
 
-  it('renders dashboard when data is loaded successfully', () => {
+  it('renders dashboard when data is loaded successfully', async () => {
     const store = createTestStore({
       analytics: {
         data: mockApiResponse,
@@ -124,6 +128,9 @@ describe('InsightCard', () => {
     });
     
     render(<InsightCard />, { wrapper: createWrapper(store) });
+    
+    // Wait for the dashboard to appear after useEffect runs
+    await new Promise(resolve => setTimeout(resolve, 100));
     
     expect(screen.getByText('Dashboard de Análisis de Ventas')).toBeInTheDocument();
     expect(screen.getByText('Ingresos Totales')).toBeInTheDocument();
@@ -131,7 +138,7 @@ describe('InsightCard', () => {
     expect(screen.getByText('Tendencias de Rendimiento')).toBeInTheDocument();
   });
 
-  it('displays period information correctly', () => {
+  it('displays period information correctly', async () => {
     const store = createTestStore({
       analytics: {
         data: mockApiResponse,
@@ -143,11 +150,14 @@ describe('InsightCard', () => {
     
     render(<InsightCard />, { wrapper: createWrapper(store) });
     
+    // Wait for the dashboard to appear after useEffect runs
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
     expect(screen.getByText(/Período:/)).toBeInTheDocument();
     expect(screen.getByText(/Última actualización:/)).toBeInTheDocument();
   });
 
-  it('shows no data message when data is null', () => {
+  it('shows no data message when data is null', async () => {
     const store = createTestStore({
       analytics: {
         data: null,
@@ -159,10 +169,13 @@ describe('InsightCard', () => {
     
     render(<InsightCard />, { wrapper: createWrapper(store) });
     
+    // Wait for the no data state to appear after useEffect runs
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
     expect(screen.getByText('No hay datos disponibles')).toBeInTheDocument();
   });
 
-  it('handles retry button click', () => {
+  it('handles retry button click', async () => {
     const store = createTestStore({
       analytics: {
         data: null,
@@ -174,6 +187,9 @@ describe('InsightCard', () => {
     const dispatchSpy = jest.spyOn(store, 'dispatch');
     
     render(<InsightCard />, { wrapper: createWrapper(store) });
+    
+    // Wait for the error state to appear after useEffect runs
+    await new Promise(resolve => setTimeout(resolve, 100));
     
     expect(screen.getByText('Reintentar')).toBeInTheDocument();
     

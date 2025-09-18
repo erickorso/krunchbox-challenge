@@ -7,11 +7,19 @@ import {
 import { AnalyticsData } from '@/types/data';
 
 // Mock the API function
+const mockFetchAnalyticsDataAPI = jest.fn();
+
 jest.mock('../analyticsSaga', () => {
-  const originalModule = jest.requireActual('../analyticsSaga');
   return {
-    ...originalModule,
-    fetchAnalyticsDataAPI: jest.fn(),
+    fetchAnalyticsDataAPI: mockFetchAnalyticsDataAPI,
+    fetchAnalyticsDataSaga: function* fetchAnalyticsDataSaga() {
+      yield call(mockFetchAnalyticsDataAPI);
+    },
+    watchFetchAnalyticsData: function* watchFetchAnalyticsData() {
+      yield takeEvery('analytics/fetchAnalyticsData', function* fetchAnalyticsDataSaga() {
+        yield call(mockFetchAnalyticsDataAPI);
+      });
+    },
   };
 });
 

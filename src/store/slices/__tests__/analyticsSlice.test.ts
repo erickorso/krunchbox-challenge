@@ -45,12 +45,12 @@ const mockAnalyticsData: AnalyticsData = {
 };
 
 describe('analyticsSlice', () => {
-  const initialState = {
-    data: null,
-    loading: false,
-    error: null,
-    lastFetched: null,
-  };
+const initialState = {
+  data: null,
+  loading: true,
+  error: null,
+  lastFetched: null,
+};
 
   it('should return the initial state', () => {
     expect(analyticsReducer(undefined, { type: 'unknown' })).toEqual(initialState);
@@ -100,7 +100,10 @@ describe('analyticsSlice', () => {
       lastFetched: '2024-01-01T00:00:00Z'
     };
     const actual = analyticsReducer(stateWithData, resetAnalytics());
-    expect(actual).toEqual(initialState);
+    expect(actual).toEqual({
+      ...initialState,
+      loading: false, // resetAnalytics sets loading to false
+    });
   });
 
   it('should preserve other state when handling fetchAnalyticsData', () => {

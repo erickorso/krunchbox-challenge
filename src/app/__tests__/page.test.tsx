@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import Home from '../page';
 
 // Mock InsightCard
-jest.mock('@/components/InsightCard', () => {
+jest.mock('../../components/InsightCard', () => {
   return function MockInsightCard() {
     return <div data-testid="insight-card">Insight Card Component</div>;
   };

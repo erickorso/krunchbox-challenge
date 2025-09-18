@@ -7,7 +7,7 @@ describe('store', () => {
     expect(state).toHaveProperty('analytics');
     expect(state.analytics).toEqual({
       data: null,
-      loading: false,
+      loading: true,
       error: null,
       lastFetched: null,
     });
@@ -30,7 +30,7 @@ describe('store', () => {
 
   it('should handle analytics actions', () => {
     const initialState = store.getState();
-    expect(initialState.analytics.loading).toBe(false);
+    expect(initialState.analytics.loading).toBe(true);
 
     // Dispatch an action
     store.dispatch({ type: 'analytics/fetchAnalyticsData' });

@@ -124,7 +124,8 @@ describe('MetricsDisplay', () => {
     
     const metricCards = screen.getAllByText(/Ingresos Totales|Total de Pedidos|Total de Clientes|Valor Promedio del Pedido|Tasa de Conversión/);
     metricCards.forEach(card => {
-      expect(card.closest('div')).toHaveClass('bg-white', 'rounded-lg', 'shadow-md');
+      const cardContainer = card.closest('div')?.parentElement;
+      expect(cardContainer).toHaveClass('bg-white', 'rounded-lg', 'shadow-md');
     });
   });
 
@@ -158,8 +159,8 @@ describe('MetricsDisplay', () => {
     
     render(<MetricsDisplay summary={edgeSummary} />);
     
-    expect(screen.getByText('$0')).toBeInTheDocument();
-    expect(screen.getByText('0')).toBeInTheDocument();
-    expect(screen.getByText('0%')).toBeInTheDocument();
+    expect(screen.getAllByText('$0')).toHaveLength(2); // Revenue and AOV
+    expect(screen.getAllByText('0')).toHaveLength(2); // Orders and Customers
+    expect(screen.getByText('0%')).toBeInTheDocument(); // Conversion rate
   });
 });

@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import RootLayout from '../layout';
 
 // Mock ReduxProvider
-jest.mock('@/providers/ReduxProvider', () => {
+jest.mock('../../providers/ReduxProvider', () => {
   return function MockReduxProvider({ children }: { children: React.ReactNode }) {
     return <div data-testid="redux-provider">{children}</div>;
   };
