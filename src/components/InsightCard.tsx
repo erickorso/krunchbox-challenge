@@ -1,40 +1,24 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { AnalyticsData } from '@/types/data';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { fetchAnalyticsData, clearError } from '@/store/slices/analyticsSlice';
 import MetricsDisplay from './MetricsDisplay';
 import TopPerformersTable from './TopPerformersTable';
 import TrendChart from './TrendChart';
 
 export default function InsightCard() {
-  const [data, setData] = useState<AnalyticsData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const dispatch = useAppDispatch();
+  const { data, loading: isLoading, error } = useAppSelector((state) => state.analytics);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        setIsError(false);
-        
-        const response = await fetch('/api/data');
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    dispatch(fetchAnalyticsData());
+  }, [dispatch]);
 
-    fetchData();
-  }, []);
+  const handleRetry = () => {
+    dispatch(clearError());
+    dispatch(fetchAnalyticsData());
+  };
 
   if (isLoading) {
     return (
@@ -47,7 +31,7 @@ export default function InsightCard() {
     );
   }
 
-  if (isError) {
+  if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="text-center">
@@ -55,7 +39,7 @@ export default function InsightCard() {
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Error al cargar los datos</h2>
           <p className="text-gray-600 mb-4">Ha ocurrido un error al cargar los datos de análisis.</p>
           <button 
-            onClick={() => window.location.reload()} 
+            onClick={handleRetry} 
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
           >
             Reintentar
