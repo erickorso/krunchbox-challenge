@@ -15,22 +15,12 @@ interface TopPerformersTableProps {
 }
 
 export default function TopPerformersTable({ data }: TopPerformersTableProps) {
-  if (!data || data.length === 0) {
-    return (
-      <div className="flex items-center justify-center h-96 text-gray-500">
-        <div className="text-center">
-          <p>No hay datos de tiendas disponibles</p>
-        </div>
-      </div>
-    );
-  }
-  
   const columnDefs: ColDef[] = useMemo(() => [
     {
       headerName: 'Rank',
       field: 'rank',
       width: 80,
-      cellRenderer: (params: any) => {
+      cellRenderer: (params: { value: number }) => {
         const rank = params.value;
         return `#${rank}`;
       }
@@ -39,7 +29,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       headerName: 'Tienda',
       field: 'store_name',
       width: 200,
-      cellRenderer: (params: any) => {
+      cellRenderer: (params: { value: number }) => {
         const store = params.data;
         return store.store_name;
       }
@@ -54,7 +44,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       field: 'revenue',
       width: 120,
       type: 'numericColumn',
-      valueFormatter: (params: any) => {
+      valueFormatter: (params: { value: number }) => {
         return new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
@@ -62,7 +52,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
           maximumFractionDigits: 0,
         }).format(params.value);
       },
-      cellRenderer: (params: any) => {
+      cellRenderer: (params: { value: number }) => {
         const revenue = params.value;
         return new Intl.NumberFormat('en-US', {
           style: 'currency',
@@ -77,10 +67,10 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       field: 'orders',
       width: 100,
       type: 'numericColumn',
-      valueFormatter: (params: any) => {
+      valueFormatter: (params: { value: number }) => {
         return new Intl.NumberFormat('en-US').format(params.value);
       },
-      cellRenderer: (params: any) => {
+      cellRenderer: (params: { value: number }) => {
         const orders = params.value;
         return new Intl.NumberFormat('en-US').format(orders);
       }
@@ -90,10 +80,10 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       field: 'customers',
       width: 100,
       type: 'numericColumn',
-      valueFormatter: (params: any) => {
+      valueFormatter: (params: { value: number }) => {
         return new Intl.NumberFormat('en-US').format(params.value);
       },
-      cellRenderer: (params: any) => {
+      cellRenderer: (params: { value: number }) => {
         const customers = params.value;
         return new Intl.NumberFormat('en-US').format(customers);
       }
@@ -103,7 +93,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       field: 'average_order_value',
       width: 100,
       type: 'numericColumn',
-      valueFormatter: (params: any) => {
+      valueFormatter: (params: { value: number }) => {
         return new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
@@ -117,7 +107,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       field: 'conversion_rate',
       width: 100,
       type: 'numericColumn',
-      valueFormatter: (params: any) => {
+      valueFormatter: (params: { value: number }) => {
         return `${params.value}%`;
       }
     }
@@ -128,6 +118,16 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
     filter: true,
     resizable: true,
   }), []);
+
+  if (!data || data.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-96 text-gray-500">
+        <div className="text-center">
+          <p>No hay datos de tiendas disponibles</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="ag-theme-alpine w-full h-96">

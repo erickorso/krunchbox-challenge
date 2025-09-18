@@ -10,7 +10,11 @@ const mockTrendData: TrendDataPoint[] = [
 
 // Mock next/dynamic
 jest.mock('next/dynamic', () => () => {
-  const MockPlot = ({ data, layout, config }: any) => (
+  const MockPlot = ({ data, layout, config }: { 
+    data: unknown; 
+    layout: unknown; 
+    config: unknown; 
+  }) => (
     <div data-testid="plotly-chart">
       <div data-testid="chart-data" data-chart-data={JSON.stringify(data)} />
       <div data-testid="chart-layout" data-chart-layout={JSON.stringify(layout)} />
@@ -84,7 +88,7 @@ describe('TrendChart', () => {
     const chartData = screen.getByTestId('chart-data');
     const data = JSON.parse(chartData.getAttribute('data-chart-data') || '[]');
     
-    data.forEach((series: any) => {
+    data.forEach((series: { type: string; mode: string }) => {
       expect(series.type).toBe('scatter');
       expect(series.mode).toBe('lines+markers');
     });

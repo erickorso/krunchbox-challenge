@@ -1,5 +1,4 @@
 import { store } from '../index';
-import analyticsReducer from '../slices/analyticsSlice';
 
 describe('store', () => {
   it('should have the correct initial state', () => {

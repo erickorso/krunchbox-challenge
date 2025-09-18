@@ -16,10 +16,12 @@ const createTestStore = (initialState = {}) => {
 };
 
 // Test wrapper component
-const createWrapper = (store: any) => {
-  return ({ children }: { children: React.ReactNode }) => {
+const createWrapper = (store: ReturnType<typeof createTestStore>) => {
+  const Wrapper = ({ children }: { children: React.ReactNode }) => {
     return React.createElement(Provider, { store }, children);
   };
+  Wrapper.displayName = 'Wrapper';
+  return Wrapper;
 };
 
 describe('Redux hooks', () => {

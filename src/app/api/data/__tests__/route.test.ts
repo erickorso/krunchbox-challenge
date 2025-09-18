@@ -1,5 +1,5 @@
 import { GET } from '../route';
-import { NextRequest } from 'next/server';
+// import { NextRequest } from 'next/server';
 
 // Mock NextResponse
 const mockNextResponse = {

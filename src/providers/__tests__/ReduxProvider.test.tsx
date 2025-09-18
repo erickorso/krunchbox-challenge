@@ -1,7 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
 import ReduxProvider from '../ReduxProvider';
-import { store } from '@/store';
 
 // Mock child component to test provider
 const TestComponent = () => {

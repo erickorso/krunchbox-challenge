@@ -108,7 +108,7 @@ export async function GET() {
     await new Promise(resolve => setTimeout(resolve, 500));
     
     return NextResponse.json(sampleData);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to fetch data' },
       { status: 500 }
