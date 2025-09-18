@@ -15,10 +15,6 @@ interface TopPerformersTableProps {
 }
 
 export default function TopPerformersTable({ data }: TopPerformersTableProps) {
-  console.log('TopPerformersTable data:', data);
-  console.log('Data length:', data?.length);
-  console.log('Data type:', typeof data);
-  
   if (!data || data.length === 0) {
     return (
       <div className="flex items-center justify-center h-96 text-gray-500">

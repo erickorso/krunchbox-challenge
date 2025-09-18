@@ -12,7 +12,6 @@ export default function InsightCard() {
   const { data, loading: isLoading, error } = useAppSelector((state) => state.analytics);
 
   useEffect(() => {
-    console.log('InsightCard useEffect - dispatching fetchAnalyticsData');
     dispatch(fetchAnalyticsData());
   }, [dispatch]);
 
@@ -60,10 +59,6 @@ export default function InsightCard() {
     );
   }
 
-  console.log('InsightCard data:', data);
-  console.log('Top performers:', data.top_performers);
-  console.log('Top performers length:', data.top_performers?.length);
-  console.log('Top performers type:', typeof data.top_performers);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
