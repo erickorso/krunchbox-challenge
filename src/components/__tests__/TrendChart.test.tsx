@@ -8,17 +8,17 @@ const mockTrendData: TrendDataPoint[] = [
   { date: "2024-01-15", revenue: 2200000, orders: 11000, customers: 8200, average_order_value: 200.00, conversion_rate: 3.7 }
 ];
 
-// Mock react-plotly.js
-jest.mock('react-plotly.js', () => {
-  return function MockPlot({ data, layout, config }: any) {
-    return (
-      <div data-testid="plotly-chart">
-        <div data-testid="chart-data" data-chart-data={JSON.stringify(data)} />
-        <div data-testid="chart-layout" data-chart-layout={JSON.stringify(layout)} />
-        <div data-testid="chart-config" data-chart-config={JSON.stringify(config)} />
-      </div>
-    );
-  };
+// Mock next/dynamic
+jest.mock('next/dynamic', () => () => {
+  const MockPlot = ({ data, layout, config }: any) => (
+    <div data-testid="plotly-chart">
+      <div data-testid="chart-data" data-chart-data={JSON.stringify(data)} />
+      <div data-testid="chart-layout" data-chart-layout={JSON.stringify(layout)} />
+      <div data-testid="chart-config" data-chart-config={JSON.stringify(config)} />
+    </div>
+  );
+  MockPlot.displayName = 'MockPlot';
+  return MockPlot;
 });
 
 describe('TrendChart', () => {

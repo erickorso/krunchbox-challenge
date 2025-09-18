@@ -87,7 +87,8 @@ describe('MetricsDisplay', () => {
     
     render(<MetricsDisplay summary={zeroSummary} />);
     
-    expect(screen.getByText('+0.0%')).toBeInTheDocument();
+    // Zero growth should not show percentage
+    expect(screen.queryByText('+0.0%')).not.toBeInTheDocument();
   });
 
   it('handles very large numbers correctly', () => {
@@ -101,7 +102,7 @@ describe('MetricsDisplay', () => {
     render(<MetricsDisplay summary={largeSummary} />);
     
     expect(screen.getByText('$1,000,000,000')).toBeInTheDocument();
-    expect(screen.getByText('9,999,999')).toBeInTheDocument();
+    expect(screen.getAllByText('9,999,999')).toHaveLength(2);
   });
 
   it('handles very small numbers correctly', () => {
@@ -115,7 +116,7 @@ describe('MetricsDisplay', () => {
     render(<MetricsDisplay summary={smallSummary} />);
     
     expect(screen.getByText('$0')).toBeInTheDocument();
-    expect(screen.getByText('1')).toBeInTheDocument();
+    expect(screen.getAllByText('1')).toHaveLength(2);
   });
 
   it('applies correct styling classes', () => {

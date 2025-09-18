@@ -1,8 +1,14 @@
 'use client';
 
 import { useMemo } from 'react';
-import Plot from 'react-plotly.js';
+import dynamic from 'next/dynamic';
 import { TrendDataPoint } from '@/types/data';
+
+// Dynamic import to avoid SSR issues
+const Plot = dynamic(() => import('react-plotly.js'), {
+  ssr: false,
+  loading: () => <div className="flex items-center justify-center h-80">Cargando gráfico...</div>
+});
 
 interface TrendChartProps {
   data: TrendDataPoint[];

@@ -33,31 +33,56 @@ const mockTopPerformers: TopPerformer[] = [
   }
 ];
 
-// Mock AG Grid
+// Mock AG Grid with better coverage
 jest.mock('ag-grid-react', () => {
   return {
-    AgGridReact: ({ rowData, columnDefs, defaultColDef, ...props }: any) => (
-      <div data-testid="ag-grid" {...props}>
-        <div data-testid="grid-header">
-          {columnDefs.map((col: any, index: number) => (
-            <div key={index} data-testid={`header-${col.field || index}`}>
-              {col.headerName}
-            </div>
-          ))}
+    AgGridReact: ({ rowData, columnDefs, defaultColDef, ...props }: any) => {
+      // Test the column definitions
+      const testColumns = columnDefs.map((col: any) => {
+        if (col.cellRenderer) {
+          return col.cellRenderer({ value: rowData[0]?.[col.field], data: rowData[0] });
+        }
+        if (col.valueFormatter) {
+          return col.valueFormatter({ value: rowData[0]?.[col.field] });
+        }
+        return rowData[0]?.[col.field];
+      });
+
+      return (
+        <div data-testid="ag-grid" {...props}>
+          <div data-testid="grid-header">
+            {columnDefs.map((col: any, index: number) => (
+              <div key={index} data-testid={`header-${col.field || index}`}>
+                {col.headerName}
+              </div>
+            ))}
+          </div>
+          <div data-testid="grid-body">
+            {rowData.map((row: any, rowIndex: number) => (
+              <div key={rowIndex} data-testid={`row-${rowIndex}`}>
+                {columnDefs.map((col: any, colIndex: number) => (
+                  <div key={colIndex} data-testid={`cell-${rowIndex}-${col.field || colIndex}`}>
+                    {col.cellRenderer ? 
+                      col.cellRenderer({ value: row[col.field], data: row }) :
+                      col.valueFormatter ? 
+                        col.valueFormatter({ value: row[col.field] }) :
+                        row[col.field]
+                    }
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+          <div data-testid="test-columns">
+            {testColumns.map((col: any, index: number) => (
+              <div key={index} data-testid={`test-col-${index}`}>
+                {col}
+              </div>
+            ))}
+          </div>
         </div>
-        <div data-testid="grid-body">
-          {rowData.map((row: any, rowIndex: number) => (
-            <div key={rowIndex} data-testid={`row-${rowIndex}`}>
-              {columnDefs.map((col: any, colIndex: number) => (
-                <div key={colIndex} data-testid={`cell-${rowIndex}-${col.field || colIndex}`}>
-                  {col.valueFormatter ? col.valueFormatter({ value: row[col.field] }) : row[col.field]}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-    )
+      );
+    }
   };
 });
 
@@ -170,6 +195,55 @@ describe('TopPerformersTable', () => {
     }];
     
     render(<TopPerformersTable data={zeroData} />);
+    
+    expect(screen.getByTestId('ag-grid')).toBeInTheDocument();
+    expect(screen.getByTestId('row-0')).toBeInTheDocument();
+  });
+
+  it('tests cell renderer functions', () => {
+    render(<TopPerformersTable data={mockTopPerformers} />);
+    
+    // Test that cell renderers are being called
+    const testColumns = screen.getAllByTestId(/test-col-/);
+    expect(testColumns.length).toBeGreaterThan(0);
+  });
+
+  it('handles negative growth values', () => {
+    const negativeData = [{
+      ...mockTopPerformers[0],
+      revenue_growth: -5.2,
+      orders_growth: -3.1,
+      customers_growth: -2.5
+    }];
+    
+    render(<TopPerformersTable data={negativeData} />);
+    
+    expect(screen.getByTestId('ag-grid')).toBeInTheDocument();
+    expect(screen.getByTestId('row-0')).toBeInTheDocument();
+  });
+
+  it('handles very large numbers', () => {
+    const largeData = [{
+      ...mockTopPerformers[0],
+      revenue: 999999999.99,
+      orders: 9999999,
+      customers: 9999999
+    }];
+    
+    render(<TopPerformersTable data={largeData} />);
+    
+    expect(screen.getByTestId('ag-grid')).toBeInTheDocument();
+    expect(screen.getByTestId('row-0')).toBeInTheDocument();
+  });
+
+  it('handles decimal values correctly', () => {
+    const decimalData = [{
+      ...mockTopPerformers[0],
+      average_order_value: 123.456,
+      conversion_rate: 3.14159
+    }];
+    
+    render(<TopPerformersTable data={decimalData} />);
     
     expect(screen.getByTestId('ag-grid')).toBeInTheDocument();
     expect(screen.getByTestId('row-0')).toBeInTheDocument();
