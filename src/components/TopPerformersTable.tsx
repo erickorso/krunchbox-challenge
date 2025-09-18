@@ -2,16 +2,33 @@
 
 import { useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 import { TopPerformer } from '@/types/data';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+
+// Register AG Grid modules
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 interface TopPerformersTableProps {
   data: TopPerformer[];
 }
 
 export default function TopPerformersTable({ data }: TopPerformersTableProps) {
+  console.log('TopPerformersTable data:', data);
+  console.log('Data length:', data?.length);
+  console.log('Data type:', typeof data);
+  
+  if (!data || data.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-96 text-gray-500">
+        <div className="text-center">
+          <p>No hay datos de tiendas disponibles</p>
+        </div>
+      </div>
+    );
+  }
+  
   const columnDefs: ColDef[] = useMemo(() => [
     {
       headerName: 'Rank',
@@ -58,7 +75,6 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       },
       cellRenderer: (params: any) => {
         const revenue = params.value;
-        const growth = params.data.revenue_growth;
         const formattedRevenue = new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
@@ -66,17 +82,8 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
           maximumFractionDigits: 0,
         }).format(revenue);
         
-        const growthColor = growth > 0 ? 'text-green-600' : growth < 0 ? 'text-red-600' : 'text-gray-600';
-        const growthIcon = growth > 0 ? '↗️' : growth < 0 ? '↘️' : '→';
-        
         return `
-          <div>
-            <div class="font-semibold">${formattedRevenue}</div>
-            <div class="text-sm ${growthColor}">
-              <span class="mr-1">${growthIcon}</span>
-              ${growth >= 0 ? '+' : ''}${growth.toFixed(1)}%
-            </div>
-          </div>
+          <div class="font-semibold text-gray-900">${formattedRevenue}</div>
         `;
       }
     },
@@ -90,20 +97,10 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       },
       cellRenderer: (params: any) => {
         const orders = params.value;
-        const growth = params.data.orders_growth;
         const formattedOrders = new Intl.NumberFormat('en-US').format(orders);
         
-        const growthColor = growth > 0 ? 'text-green-600' : growth < 0 ? 'text-red-600' : 'text-gray-600';
-        const growthIcon = growth > 0 ? '↗️' : growth < 0 ? '↘️' : '→';
-        
         return `
-          <div>
-            <div class="font-semibold">${formattedOrders}</div>
-            <div class="text-sm ${growthColor}">
-              <span class="mr-1">${growthIcon}</span>
-              ${growth >= 0 ? '+' : ''}${growth.toFixed(1)}%
-            </div>
-          </div>
+          <div class="font-semibold text-gray-900">${formattedOrders}</div>
         `;
       }
     },
@@ -117,20 +114,10 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       },
       cellRenderer: (params: any) => {
         const customers = params.value;
-        const growth = params.data.customers_growth;
         const formattedCustomers = new Intl.NumberFormat('en-US').format(customers);
         
-        const growthColor = growth > 0 ? 'text-green-600' : growth < 0 ? 'text-red-600' : 'text-gray-600';
-        const growthIcon = growth > 0 ? '↗️' : growth < 0 ? '↘️' : '→';
-        
         return `
-          <div>
-            <div class="font-semibold">${formattedCustomers}</div>
-            <div class="text-sm ${growthColor}">
-              <span class="mr-1">${growthIcon}</span>
-              ${growth >= 0 ? '+' : ''}${growth.toFixed(1)}%
-            </div>
-          </div>
+          <div class="font-semibold text-gray-900">${formattedCustomers}</div>
         `;
       }
     },

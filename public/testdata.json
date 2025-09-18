@@ -1,0 +1,235 @@
+{
+  "metadata": {
+    "generated_at": "2025-09-17T10:00:00Z",
+    "tenant_id": "demo_tenant",
+    "data_freshness": "2025-09-17T08:30:00Z"
+  },
+  "salesInsight": {
+    "summary": {
+      "current_period": {
+        "sales_value": 245678.50,
+        "sales_units": 3456,
+        "gross_margin_value": 83530.69,
+        "gross_margin_percent": 34.0,
+        "period_label": "Week 37, 2025",
+        "period_start": "2025-09-09",
+        "period_end": "2025-09-15"
+      },
+      "previous_period": {
+        "sales_value": 218945.25,
+        "sales_units": 3102,
+        "gross_margin_value": 72251.93,
+        "gross_margin_percent": 33.0,
+        "period_label": "Week 36, 2025",
+        "period_start": "2025-09-02",
+        "period_end": "2025-09-08"
+      },
+      "variance": {
+        "sales_value_change": 26733.25,
+        "sales_value_var_percent": 12.2,
+        "sales_units_change": 354,
+        "sales_units_var_percent": 11.4,
+        "margin_var_percent": 3.0
+      },
+      "performance_indicator": "above_target",
+      "alert_status": "green"
+    },
+    "top_performers": [
+      {
+        "store_id": "WMT_1234",
+        "store_name": "Walmart Supercenter #1234",
+        "retailer": "Walmart",
+        "city": "Austin",
+        "state": "TX",
+        "sales_value": 45678.90,
+        "sales_units": 680,
+        "gross_margin_percent": 35.2,
+        "sales_value_var_percent": 15.2,
+        "sales_units_var_percent": 12.8,
+        "sell_thru_rate": 0.78,
+        "stock_on_hand_units": 220,
+        "rank": 1
+      },
+      {
+        "store_id": "TGT_5678",
+        "store_name": "Target Store #5678",
+        "retailer": "Target",
+        "city": "Houston",
+        "state": "TX",
+        "sales_value": 38945.65,
+        "sales_units": 545,
+        "gross_margin_percent": 33.8,
+        "sales_value_var_percent": 8.5,
+        "sales_units_var_percent": 7.2,
+        "sell_thru_rate": 0.72,
+        "stock_on_hand_units": 180,
+        "rank": 2
+      },
+      {
+        "store_id": "CVS_9012",
+        "store_name": "CVS Pharmacy #9012",
+        "retailer": "CVS",
+        "city": "Dallas",
+        "state": "TX",
+        "sales_value": 28534.20,
+        "sales_units": 412,
+        "gross_margin_percent": 38.5,
+        "sales_value_var_percent": -2.3,
+        "sales_units_var_percent": -1.8,
+        "sell_thru_rate": 0.65,
+        "stock_on_hand_units": 150,
+        "rank": 3
+      },
+      {
+        "store_id": "WBA_3456",
+        "store_name": "Walgreens #3456",
+        "retailer": "Walgreens",
+        "city": "San Antonio",
+        "state": "TX",
+        "sales_value": 24567.80,
+        "sales_units": 380,
+        "gross_margin_percent": 37.2,
+        "sales_value_var_percent": 18.7,
+        "sales_units_var_percent": 16.5,
+        "sell_thru_rate": 0.82,
+        "stock_on_hand_units": 95,
+        "rank": 4
+      },
+      {
+        "store_id": "KRG_7890",
+        "store_name": "Kroger #7890",
+        "retailer": "Kroger",
+        "city": "Fort Worth",
+        "state": "TX",
+        "sales_value": 22145.35,
+        "sales_units": 335,
+        "gross_margin_percent": 32.5,
+        "sales_value_var_percent": 5.8,
+        "sales_units_var_percent": 4.2,
+        "sell_thru_rate": 0.70,
+        "stock_on_hand_units": 125,
+        "rank": 5
+      }
+    ],
+    "bottom_performers": [
+      {
+        "store_id": "WMT_8765",
+        "store_name": "Walmart Neighborhood #8765",
+        "retailer": "Walmart",
+        "city": "Plano",
+        "state": "TX",
+        "sales_value": 8234.50,
+        "sales_units": 125,
+        "gross_margin_percent": 28.5,
+        "sales_value_var_percent": -22.3,
+        "sales_units_var_percent": -18.5,
+        "sell_thru_rate": 0.35,
+        "stock_on_hand_units": 280,
+        "rank": 48
+      },
+      {
+        "store_id": "TGT_2341",
+        "store_name": "Target Express #2341",
+        "retailer": "Target",
+        "city": "Arlington",
+        "state": "TX",
+        "sales_value": 6789.25,
+        "sales_units": 98,
+        "gross_margin_percent": 27.2,
+        "sales_value_var_percent": -28.7,
+        "sales_units_var_percent": -25.2,
+        "sell_thru_rate": 0.28,
+        "stock_on_hand_units": 350,
+        "rank": 49
+      },
+      {
+        "store_id": "CVS_1122",
+        "store_name": "CVS Pharmacy #1122",
+        "retailer": "CVS",
+        "city": "Irving",
+        "state": "TX",
+        "sales_value": 5432.10,
+        "sales_units": 78,
+        "gross_margin_percent": 25.8,
+        "sales_value_var_percent": -35.2,
+        "sales_units_var_percent": -32.8,
+        "sell_thru_rate": 0.22,
+        "stock_on_hand_units": 400,
+        "rank": 50
+      }
+    ],
+    "trend_data": [
+      {"date": "2025-09-09", "sales_value": 32456.78, "sales_units": 456, "day_of_week": "Monday"},
+      {"date": "2025-09-10", "sales_value": 35678.90, "sales_units": 502, "day_of_week": "Tuesday"},
+      {"date": "2025-09-11", "sales_value": 33234.56, "sales_units": 478, "day_of_week": "Wednesday"},
+      {"date": "2025-09-12", "sales_value": 36789.12, "sales_units": 515, "day_of_week": "Thursday"},
+      {"date": "2025-09-13", "sales_value": 38945.23, "sales_units": 548, "day_of_week": "Friday"},
+      {"date": "2025-09-14", "sales_value": 42567.89, "sales_units": 598, "day_of_week": "Saturday"},
+      {"date": "2025-09-15", "sales_value": 26002.02, "sales_units": 359, "day_of_week": "Sunday"}
+    ],
+    "category_breakdown": [
+      {
+        "category": "Personal Care",
+        "sales_value": 98234.50,
+        "sales_units": 1382,
+        "sales_mix_percent": 40.0,
+        "margin_percent": 35.5
+      },
+      {
+        "category": "Health & Wellness",
+        "sales_value": 73678.25,
+        "sales_units": 1037,
+        "sales_mix_percent": 30.0,
+        "margin_percent": 38.2
+      },
+      {
+        "category": "Beauty",
+        "sales_value": 49123.45,
+        "sales_units": 691,
+        "sales_mix_percent": 20.0,
+        "margin_percent": 42.1
+      },
+      {
+        "category": "Household",
+        "sales_value": 24642.30,
+        "sales_units": 346,
+        "sales_mix_percent": 10.0,
+        "margin_percent": 28.5
+      }
+    ],
+    "insights": [
+      {
+        "type": "positive",
+        "message": "Sales velocity increased 15% in Texas region, driven by strong performance at Walmart and Walgreens locations",
+        "priority": "high"
+      },
+      {
+        "type": "warning",
+        "message": "3 stores showing low sell-through rates (<30%) with high inventory levels - recommend allocation review",
+        "priority": "medium"
+      },
+      {
+        "type": "info",
+        "message": "Weekend sales (Fri-Sat) account for 42% of weekly revenue",
+        "priority": "low"
+      }
+    ],
+    "forecast_next_period": {
+      "predicted_sales_value": 258000,
+      "predicted_sales_units": 3625,
+      "confidence_level": 0.85,
+      "factors": [
+        "Seasonal trend positive",
+        "Promotional calendar impact",
+        "Historical growth pattern"
+      ]
+    }
+  },
+  "response_metadata": {
+    "query_time_ms": 127,
+    "cache_hit": false,
+    "data_quality_score": 0.98,
+    "missing_stores": 0,
+    "last_file_processed": "2025-09-17T08:15:00Z"
+  }
+}
