@@ -29,7 +29,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       headerName: 'Tienda',
       field: 'store_name',
       width: 200,
-      cellRenderer: (params: { value: number }) => {
+      cellRenderer: (params: { value: number; data: TopPerformer }) => {
         const store = params.data;
         return store.store_name;
       }
@@ -141,6 +141,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
         pagination={true}
         paginationPageSize={10}
         domLayout="normal"
+        theme="legacy"
       />
     </div>
   );
