@@ -12,6 +12,7 @@ export default function InsightCard() {
   const { data, loading: isLoading, error } = useAppSelector((state) => state.analytics);
 
   useEffect(() => {
+    console.log('InsightCard useEffect - dispatching fetchAnalyticsData');
     dispatch(fetchAnalyticsData());
   }, [dispatch]);
 

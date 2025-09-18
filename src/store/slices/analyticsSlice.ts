@@ -10,7 +10,7 @@ interface AnalyticsState {
 
 const initialState: AnalyticsState = {
   data: null,
-  loading: false,
+  loading: true, // Start with loading true
   error: null,
   lastFetched: null,
 };
