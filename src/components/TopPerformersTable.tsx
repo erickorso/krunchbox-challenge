@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ColDef, ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
+import { Skeleton } from '@/components/ui/skeleton';
 import { TopPerformer } from '@/types/data';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -122,8 +123,13 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
   if (!data || data.length === 0) {
     return (
       <div className="flex items-center justify-center h-96 text-gray-500">
-        <div className="text-center">
+        <div className="text-center space-y-4">
           <p>No hay datos de tiendas disponibles</p>
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-4 w-1/2" />
+          </div>
         </div>
       </div>
     );

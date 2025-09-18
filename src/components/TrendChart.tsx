@@ -2,12 +2,22 @@
 
 import { useMemo } from 'react';
 import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
 import { TrendDataPoint } from '@/types/data';
 
 // Dynamic import to avoid SSR issues
 const Plot = dynamic(() => import('react-plotly.js'), {
   ssr: false,
-  loading: () => <div className="flex items-center justify-center h-80">Cargando gráfico...</div>
+  loading: () => (
+    <div className="flex items-center justify-center h-96">
+      <div className="w-full space-y-2">
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-3/4" />
+        <Skeleton className="h-4 w-1/2" />
+        <Skeleton className="h-64 w-full" />
+      </div>
+    </div>
+  )
 });
 
 interface TrendChartProps {

@@ -1,6 +1,8 @@
 'use client';
 
 import { Summary } from '@/types/data';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface MetricsDisplayProps {
   summary: Summary;
@@ -24,10 +26,10 @@ export default function MetricsDisplay({ summary }: MetricsDisplayProps) {
     return new Intl.NumberFormat('en-US').format(value);
   };
 
-  const getGrowthColor = (value: number) => {
-    if (value > 0) return 'text-green-600';
-    if (value < 0) return 'text-red-600';
-    return 'text-gray-600';
+  const getGrowthVariant = (value: number): "default" | "destructive" | "secondary" => {
+    if (value > 0) return 'default';
+    if (value < 0) return 'destructive';
+    return 'secondary';
   };
 
   const getGrowthIcon = (value: number) => {
@@ -77,28 +79,27 @@ export default function MetricsDisplay({ summary }: MetricsDisplayProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
       {metrics.map((metric, index) => (
-        <div key={index} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-          <div className="flex items-center justify-between mb-4">
+        <Card key={index} className="hover:shadow-lg transition-shadow">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <div className={`w-12 h-12 ${metric.color} rounded-lg flex items-center justify-center text-white text-xl`}>
               {metric.icon}
             </div>
             {metric.growth !== 0 && (
-              <div className={`text-sm font-medium ${getGrowthColor(metric.growth)}`}>
+              <Badge variant={getGrowthVariant(metric.growth)}>
                 <span className="mr-1">{getGrowthIcon(metric.growth)}</span>
                 {formatPercentage(metric.growth)}
-              </div>
+              </Badge>
             )}
-          </div>
-          
-          <div>
-            <h3 className="text-sm font-medium text-gray-600 mb-1">
+          </CardHeader>
+          <CardContent>
+            <div className="text-sm font-medium text-muted-foreground mb-1">
               {metric.title}
-            </h3>
-            <p className="text-2xl font-bold text-gray-900">
+            </div>
+            <div className="text-2xl font-bold">
               {metric.value}
-            </p>
-          </div>
-        </div>
+            </div>
+          </CardContent>
+        </Card>
       ))}
     </div>
   );

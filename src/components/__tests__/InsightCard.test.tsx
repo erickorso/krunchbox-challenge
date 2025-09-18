@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import InsightCard from '../InsightCard';
@@ -56,8 +56,9 @@ describe('InsightCard', () => {
     
     render(<InsightCard />, { wrapper: createWrapper(store) });
     
-    expect(screen.getByText('Cargando datos de análisis...')).toBeInTheDocument();
-    expect(screen.getByText('Cargando datos de análisis...').parentElement?.querySelector('.animate-spin')).toBeInTheDocument();
+    // Check for skeleton loading elements instead of text
+    const skeletonElements = document.querySelectorAll('[data-slot="skeleton"]');
+    expect(skeletonElements).toHaveLength(2);
   });
 
   it('renders with Redux provider', () => {
@@ -65,6 +66,8 @@ describe('InsightCard', () => {
     
     render(<InsightCard />, { wrapper: createWrapper(store) });
     
-    expect(screen.getByText('Cargando datos de análisis...')).toBeInTheDocument();
+    // Check for skeleton loading elements instead of text
+    const skeletonElements = document.querySelectorAll('[data-slot="skeleton"]');
+    expect(skeletonElements).toHaveLength(2);
   });
 });

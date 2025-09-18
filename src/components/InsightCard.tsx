@@ -3,6 +3,10 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchAnalyticsData, clearError } from '@/store/slices/analyticsSlice';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Skeleton } from '@/components/ui/skeleton';
 import MetricsDisplay from './MetricsDisplay';
 import TopPerformersTable from './TopPerformersTable';
 import TrendChart from './TrendChart';
@@ -23,10 +27,14 @@ export default function InsightCard() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">Cargando datos de análisis...</p>
-        </div>
+        <Card className="w-full max-w-md">
+          <CardContent className="pt-6">
+            <div className="text-center">
+              <Skeleton className="h-12 w-12 rounded-full mx-auto mb-4" />
+              <Skeleton className="h-6 w-48 mx-auto" />
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
@@ -34,17 +42,22 @@ export default function InsightCard() {
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="text-center">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Error al cargar los datos</h2>
-          <p className="text-gray-600 mb-4">Ha ocurrido un error al cargar los datos de análisis.</p>
-          <button 
-            onClick={handleRetry} 
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
-          >
-            Reintentar
-          </button>
-        </div>
+        <Card className="w-full max-w-md">
+          <CardContent className="pt-6">
+            <div className="text-center">
+              <div className="text-red-500 text-6xl mb-4">⚠️</div>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">Error al cargar los datos</h2>
+              <Alert className="mb-4">
+                <AlertDescription>
+                  Ha ocurrido un error al cargar los datos de análisis.
+                </AlertDescription>
+              </Alert>
+              <Button onClick={handleRetry} className="w-full">
+                Reintentar
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
@@ -52,9 +65,13 @@ export default function InsightCard() {
   if (!data) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="text-center">
-          <p className="text-gray-600 text-lg">No hay datos disponibles</p>
-        </div>
+        <Card className="w-full max-w-md">
+          <CardContent className="pt-6">
+            <div className="text-center">
+              <p className="text-gray-600 text-lg">No hay datos disponibles</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
@@ -84,20 +101,24 @@ export default function InsightCard() {
         {/* Charts and Tables Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Trend Chart */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              Tendencias de Rendimiento
-            </h2>
-            <TrendChart data={data.trend_data} />
-          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Tendencias de Rendimiento</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <TrendChart data={data.trend_data} />
+            </CardContent>
+          </Card>
 
           {/* Top Performers Table */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              Tiendas con Mejor Rendimiento
-            </h2>
-            <TopPerformersTable data={data.top_performers} />
-          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Tiendas con Mejor Rendimiento</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <TopPerformersTable data={data.top_performers} />
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
