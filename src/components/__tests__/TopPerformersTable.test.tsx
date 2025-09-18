@@ -36,8 +36,8 @@ const mockTopPerformers: TopPerformer[] = [
 // Mock AG Grid
 jest.mock('ag-grid-react', () => {
   return {
-    AgGridReact: ({ rowData, columnDefs }: any) => (
-      <div data-testid="ag-grid">
+    AgGridReact: ({ rowData, columnDefs, defaultColDef, ...props }: any) => (
+      <div data-testid="ag-grid" {...props}>
         <div data-testid="grid-header">
           {columnDefs.map((col: any, index: number) => (
             <div key={index} data-testid={`header-${col.field || index}`}>
@@ -115,5 +115,63 @@ describe('TopPerformersTable', () => {
     
     const gridContainer = screen.getByTestId('ag-grid').parentElement;
     expect(gridContainer).toHaveClass('ag-theme-alpine');
+  });
+
+  it('handles single store data', () => {
+    const singleStore = [mockTopPerformers[0]];
+    render(<TopPerformersTable data={singleStore} />);
+    
+    expect(screen.getByTestId('ag-grid')).toBeInTheDocument();
+    expect(screen.getByTestId('row-0')).toBeInTheDocument();
+    expect(screen.queryByTestId('row-1')).not.toBeInTheDocument();
+  });
+
+  it('displays store names and locations correctly', () => {
+    render(<TopPerformersTable data={mockTopPerformers} />);
+    
+    // Check that store names are displayed
+    const storeNameCells = screen.getAllByTestId(/cell-0-store_name/);
+    expect(storeNameCells[0]).toHaveTextContent('Downtown Flagship');
+  });
+
+  it('handles large datasets', () => {
+    const largeDataset = Array.from({ length: 100 }, (_, index) => ({
+      ...mockTopPerformers[0],
+      store_id: `ST${index + 1}`,
+      store_name: `Store ${index + 1}`,
+      rank: index + 1
+    }));
+    
+    render(<TopPerformersTable data={largeDataset} />);
+    
+    expect(screen.getByTestId('ag-grid')).toBeInTheDocument();
+    expect(screen.getByTestId('row-0')).toBeInTheDocument();
+    expect(screen.getByTestId('row-99')).toBeInTheDocument();
+  });
+
+  it('formats conversion rate correctly', () => {
+    render(<TopPerformersTable data={mockTopPerformers} />);
+    
+    const conversionCells = screen.getAllByTestId(/cell-0-conversion_rate/);
+    expect(conversionCells[0]).toHaveTextContent('4.2%');
+  });
+
+  it('handles zero values correctly', () => {
+    const zeroData = [{
+      ...mockTopPerformers[0],
+      revenue: 0,
+      orders: 0,
+      customers: 0,
+      revenue_growth: 0,
+      orders_growth: 0,
+      customers_growth: 0,
+      average_order_value: 0,
+      conversion_rate: 0
+    }];
+    
+    render(<TopPerformersTable data={zeroData} />);
+    
+    expect(screen.getByTestId('ag-grid')).toBeInTheDocument();
+    expect(screen.getByTestId('row-0')).toBeInTheDocument();
   });
 });

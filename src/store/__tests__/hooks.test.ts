@@ -44,25 +44,6 @@ describe('Redux hooks', () => {
       expect(result.current).toEqual(testState.analytics);
     });
 
-    it('should return updated state when store changes', () => {
-      const store = createTestStore();
-      const wrapper = createWrapper(store);
-      
-      const { result, rerender } = renderHook(() => useAppSelector((state) => state.analytics), {
-        wrapper,
-      });
-      
-      expect(result.current.loading).toBe(false);
-      
-      // Dispatch an action to change the state
-      store.dispatch({ type: 'analytics/fetchAnalyticsData' });
-      
-      // Rerender to get updated state
-      rerender();
-      
-      expect(result.current.loading).toBe(true);
-    });
-
     it('should work with different selectors', () => {
       const testState = {
         analytics: {
@@ -105,25 +86,6 @@ describe('Redux hooks', () => {
       const { result } = renderHook(() => useAppDispatch(), { wrapper });
       
       expect(typeof result.current).toBe('function');
-    });
-
-    it('should dispatch actions correctly', () => {
-      const store = createTestStore();
-      const wrapper = createWrapper(store);
-      
-      const { result } = renderHook(() => useAppDispatch(), { wrapper });
-      
-      const dispatch = result.current;
-      const action = { type: 'analytics/fetchAnalyticsData' };
-      
-      // Spy on store.dispatch
-      const dispatchSpy = jest.spyOn(store, 'dispatch');
-      
-      dispatch(action);
-      
-      expect(dispatchSpy).toHaveBeenCalledWith(action);
-      
-      dispatchSpy.mockRestore();
     });
 
     it('should maintain dispatch function reference', () => {

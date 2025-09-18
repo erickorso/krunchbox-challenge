@@ -1,4 +1,3 @@
-import { runSaga } from 'redux-saga';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { fetchAnalyticsDataSaga, watchFetchAnalyticsData, fetchAnalyticsDataAPI } from '../analyticsSaga';
 import {
@@ -42,63 +41,62 @@ describe('analyticsSaga', () => {
   });
 
   describe('fetchAnalyticsDataSaga', () => {
-    it('should fetch analytics data successfully', async () => {
-      const mockFetchAnalyticsDataAPI = fetchAnalyticsDataAPI as jest.MockedFunction<typeof fetchAnalyticsDataAPI>;
-      mockFetchAnalyticsDataAPI.mockResolvedValue(mockAnalyticsData);
-
-      const dispatched: any[] = [];
-
-      await runSaga(
-        {
-          dispatch: (action) => dispatched.push(action),
-        },
-        fetchAnalyticsDataSaga
-      ).toPromise();
-
-      expect(mockFetchAnalyticsDataAPI).toHaveBeenCalledTimes(1);
-      expect(dispatched).toHaveLength(1);
-      expect(dispatched[0]).toEqual(fetchAnalyticsDataSuccess(mockAnalyticsData));
+    it('should be a generator function', () => {
+      expect(typeof fetchAnalyticsDataSaga).toBe('function');
+      expect(fetchAnalyticsDataSaga.constructor.name).toBe('GeneratorFunction');
     });
 
-    it('should handle fetch analytics data failure', async () => {
-      const mockFetchAnalyticsDataAPI = fetchAnalyticsDataAPI as jest.MockedFunction<typeof fetchAnalyticsDataAPI>;
-      const errorMessage = 'Network error';
-      mockFetchAnalyticsDataAPI.mockRejectedValue(new Error(errorMessage));
-
-      const dispatched: any[] = [];
-
-      await runSaga(
-        {
-          dispatch: (action) => dispatched.push(action),
-        },
-        fetchAnalyticsDataSaga
-      ).toPromise();
-
-      expect(mockFetchAnalyticsDataAPI).toHaveBeenCalledTimes(1);
-      expect(dispatched).toHaveLength(1);
-      expect(dispatched[0]).toEqual(fetchAnalyticsDataFailure(errorMessage));
+    it('should call fetchAnalyticsDataAPI', () => {
+      const generator = fetchAnalyticsDataSaga();
+      const firstCall = generator.next();
+      
+      expect(firstCall.value).toEqual(call(fetchAnalyticsDataAPI));
     });
 
-    it('should handle unknown error', async () => {
-      const mockFetchAnalyticsDataAPI = fetchAnalyticsDataAPI as jest.MockedFunction<typeof fetchAnalyticsDataAPI>;
-      mockFetchAnalyticsDataAPI.mockRejectedValue('Unknown error');
+    it('should dispatch success action on successful API call', () => {
+      const generator = fetchAnalyticsDataSaga();
+      
+      // Skip the call effect
+      generator.next();
+      
+      // Mock successful result
+      const successResult = generator.next(mockAnalyticsData);
+      
+      expect(successResult.value).toEqual(put(fetchAnalyticsDataSuccess(mockAnalyticsData)));
+    });
 
-      const dispatched: any[] = [];
+    it('should dispatch failure action on API error', () => {
+      const generator = fetchAnalyticsDataSaga();
+      const error = new Error('API Error');
+      
+      // Skip the call effect
+      generator.next();
+      
+      // Mock error result
+      const errorResult = generator.throw(error);
+      
+      expect(errorResult.value).toEqual(put(fetchAnalyticsDataFailure('API Error')));
+    });
 
-      await runSaga(
-        {
-          dispatch: (action) => dispatched.push(action),
-        },
-        fetchAnalyticsDataSaga
-      ).toPromise();
-
-      expect(mockFetchAnalyticsDataAPI).toHaveBeenCalledTimes(1);
-      expect(dispatched).toHaveLength(1);
-      expect(dispatched[0]).toEqual(fetchAnalyticsDataFailure('An unknown error occurred'));
+    it('should handle unknown error types', () => {
+      const generator = fetchAnalyticsDataSaga();
+      
+      // Skip the call effect
+      generator.next();
+      
+      // Mock unknown error
+      const errorResult = generator.throw('Unknown error');
+      
+      expect(errorResult.value).toEqual(put(fetchAnalyticsDataFailure('An unknown error occurred')));
     });
   });
 
   describe('watchFetchAnalyticsData', () => {
+    it('should be a generator function', () => {
+      expect(typeof watchFetchAnalyticsData).toBe('function');
+      expect(watchFetchAnalyticsData.constructor.name).toBe('GeneratorFunction');
+    });
+
     it('should take every fetchAnalyticsData action', () => {
       const generator = watchFetchAnalyticsData();
       

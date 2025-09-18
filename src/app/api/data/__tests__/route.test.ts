@@ -103,4 +103,80 @@ describe('/api/data', () => {
     // Should take at least 500ms due to the delay
     expect(endTime - startTime).toBeGreaterThanOrEqual(500);
   });
+
+  it('returns consistent data structure across multiple calls', async () => {
+    const response1 = await GET();
+    const response2 = await GET();
+    
+    expect(response1.data).toEqual(response2.data);
+  });
+
+  it('has valid date formats in period', async () => {
+    const response = await GET();
+    
+    const startDate = new Date(response.data.period.start_date);
+    const endDate = new Date(response.data.period.end_date);
+    
+    expect(startDate).toBeInstanceOf(Date);
+    expect(endDate).toBeInstanceOf(Date);
+    expect(startDate.getTime()).toBeLessThanOrEqual(endDate.getTime());
+  });
+
+  it('has valid last_updated timestamp', async () => {
+    const response = await GET();
+    
+    const lastUpdated = new Date(response.data.last_updated);
+    expect(lastUpdated).toBeInstanceOf(Date);
+    expect(lastUpdated.getTime()).toBeLessThanOrEqual(Date.now());
+  });
+
+  it('has valid summary data types', async () => {
+    const response = await GET();
+    const summary = response.data.summary;
+    
+    expect(typeof summary.total_revenue).toBe('number');
+    expect(typeof summary.total_orders).toBe('number');
+    expect(typeof summary.total_customers).toBe('number');
+    expect(typeof summary.revenue_growth).toBe('number');
+    expect(typeof summary.orders_growth).toBe('number');
+    expect(typeof summary.customers_growth).toBe('number');
+    expect(typeof summary.average_order_value).toBe('number');
+    expect(typeof summary.conversion_rate).toBe('number');
+  });
+
+  it('has valid top_performers array structure', async () => {
+    const response = await GET();
+    const topPerformers = response.data.top_performers;
+    
+    expect(Array.isArray(topPerformers)).toBe(true);
+    expect(topPerformers.length).toBeGreaterThan(0);
+    
+    topPerformers.forEach((performer, index) => {
+      expect(performer).toHaveProperty('store_id');
+      expect(performer).toHaveProperty('store_name');
+      expect(performer).toHaveProperty('location');
+      expect(performer).toHaveProperty('revenue');
+      expect(performer).toHaveProperty('orders');
+      expect(performer).toHaveProperty('customers');
+      expect(performer).toHaveProperty('rank');
+      expect(performer.rank).toBe(index + 1);
+    });
+  });
+
+  it('has valid trend_data array structure', async () => {
+    const response = await GET();
+    const trendData = response.data.trend_data;
+    
+    expect(Array.isArray(trendData)).toBe(true);
+    expect(trendData.length).toBeGreaterThan(0);
+    
+    trendData.forEach((dataPoint) => {
+      expect(dataPoint).toHaveProperty('date');
+      expect(dataPoint).toHaveProperty('revenue');
+      expect(dataPoint).toHaveProperty('orders');
+      expect(dataPoint).toHaveProperty('customers');
+      expect(dataPoint).toHaveProperty('average_order_value');
+      expect(dataPoint).toHaveProperty('conversion_rate');
+    });
+  });
 });

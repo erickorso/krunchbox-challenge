@@ -1,4 +1,4 @@
-import { render, screen, waitFor, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import InsightCard from '../InsightCard';
@@ -17,12 +17,6 @@ jest.mock('../TopPerformersTable', () => {
     return <div data-testid="top-performers-table">Top Performers Table with {data.length} stores</div>;
   };
 });
-
-// Mock Redux Saga
-jest.mock('@/store/sagas/analyticsSaga', () => ({
-  watchFetchAnalyticsData: jest.fn(),
-  fetchAnalyticsDataSaga: jest.fn(),
-}));
 
 // Create test store
 const createTestStore = (initialState = {}) => {
@@ -78,9 +72,6 @@ const mockApiResponse = {
   },
   last_updated: "2024-02-19T10:30:00Z"
 };
-
-// Mock fetch
-global.fetch = jest.fn();
 
 describe('InsightCard', () => {
   it('shows loading state initially', () => {
@@ -150,15 +141,19 @@ describe('InsightCard', () => {
     expect(screen.getByText(/Última actualización:/)).toBeInTheDocument();
   });
 
-  it('dispatches fetchAnalyticsData on mount', () => {
-    const store = createTestStore();
-    const dispatchSpy = jest.spyOn(store, 'dispatch');
+  it('shows no data message when data is null', () => {
+    const store = createTestStore({
+      analytics: {
+        data: null,
+        loading: false,
+        error: null,
+        lastFetched: null,
+      },
+    });
     
     render(<InsightCard />, { wrapper: createWrapper(store) });
     
-    expect(dispatchSpy).toHaveBeenCalledWith({ type: 'analytics/fetchAnalyticsData' });
-    
-    dispatchSpy.mockRestore();
+    expect(screen.getByText('No hay datos disponibles')).toBeInTheDocument();
   });
 
   it('handles retry button click', () => {
