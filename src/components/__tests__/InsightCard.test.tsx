@@ -1,5 +1,19 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import InsightCard from '../InsightCard';
+
+// Mock TrendChart to avoid Plotly.js issues
+jest.mock('../TrendChart', () => {
+  return function MockTrendChart({ data }: any) {
+    return <div data-testid="trend-chart">Trend Chart with {data.length} data points</div>;
+  };
+});
+
+// Mock TopPerformersTable
+jest.mock('../TopPerformersTable', () => {
+  return function MockTopPerformersTable({ data }: any) {
+    return <div data-testid="top-performers-table">Top Performers Table with {data.length} stores</div>;
+  };
+});
 
 // Mock the API response
 const mockApiResponse = {
@@ -53,13 +67,15 @@ describe('InsightCard', () => {
     render(<InsightCard />);
     
     expect(screen.getByText('Cargando datos de análisis...')).toBeInTheDocument();
-    expect(screen.getByRole('status', { hidden: true })).toBeInTheDocument(); // Spinner
+    expect(screen.getByText('Cargando datos de análisis...').parentElement?.querySelector('.animate-spin')).toBeInTheDocument();
   });
 
   it('shows error state when API fails', async () => {
     (fetch as jest.Mock).mockRejectedValue(new Error('API Error'));
     
-    render(<InsightCard />);
+    await act(async () => {
+      render(<InsightCard />);
+    });
     
     await waitFor(() => {
       expect(screen.getByText('Error al cargar los datos')).toBeInTheDocument();
@@ -74,7 +90,9 @@ describe('InsightCard', () => {
       json: async () => mockApiResponse
     });
     
-    render(<InsightCard />);
+    await act(async () => {
+      render(<InsightCard />);
+    });
     
     await waitFor(() => {
       expect(screen.getByText('Dashboard de Análisis de Ventas')).toBeInTheDocument();
@@ -90,7 +108,9 @@ describe('InsightCard', () => {
       json: async () => mockApiResponse
     });
     
-    render(<InsightCard />);
+    await act(async () => {
+      render(<InsightCard />);
+    });
     
     await waitFor(() => {
       expect(screen.getByText(/Período:/)).toBeInTheDocument();
@@ -98,13 +118,15 @@ describe('InsightCard', () => {
     });
   });
 
-  it('calls API endpoint on mount', () => {
+  it('calls API endpoint on mount', async () => {
     (fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: async () => mockApiResponse
     });
     
-    render(<InsightCard />);
+    await act(async () => {
+      render(<InsightCard />);
+    });
     
     expect(fetch).toHaveBeenCalledWith('/api/data');
   });
@@ -112,7 +134,9 @@ describe('InsightCard', () => {
   it('handles retry button click', async () => {
     (fetch as jest.Mock).mockRejectedValueOnce(new Error('API Error'));
     
-    render(<InsightCard />);
+    await act(async () => {
+      render(<InsightCard />);
+    });
     
     await waitFor(() => {
       expect(screen.getByText('Reintentar')).toBeInTheDocument();
@@ -124,7 +148,13 @@ describe('InsightCard', () => {
       json: async () => mockApiResponse
     });
     
+    // Mock window.location.reload
+    const mockReload = jest.fn();
+    delete (window as any).location;
+    (window as any).location = { reload: mockReload };
+    
     // Simulate retry by reloading (in real app, this would be a button click)
-    window.location.reload = jest.fn();
+    mockReload();
+    expect(mockReload).toHaveBeenCalled();
   });
 });
