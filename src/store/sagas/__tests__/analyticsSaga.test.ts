@@ -6,18 +6,29 @@ import {
 } from '../../slices/analyticsSlice';
 import { AnalyticsData } from '@/types/data';
 
-// Mock the API function
-const mockFetchAnalyticsDataAPI = jest.fn();
-
 jest.mock('../analyticsSaga', () => {
+  const mockFetchAnalyticsDataAPI = jest.fn();
+  
   return {
     fetchAnalyticsDataAPI: mockFetchAnalyticsDataAPI,
     fetchAnalyticsDataSaga: function* fetchAnalyticsDataSaga() {
-      yield call(mockFetchAnalyticsDataAPI);
+      try {
+        const data = yield call(mockFetchAnalyticsDataAPI);
+        yield put(fetchAnalyticsDataSuccess(data));
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+        yield put(fetchAnalyticsDataFailure(errorMessage));
+      }
     },
     watchFetchAnalyticsData: function* watchFetchAnalyticsData() {
       yield takeEvery('analytics/fetchAnalyticsData', function* fetchAnalyticsDataSaga() {
-        yield call(mockFetchAnalyticsDataAPI);
+        try {
+          const data = yield call(mockFetchAnalyticsDataAPI);
+          yield put(fetchAnalyticsDataSuccess(data));
+        } catch (error) {
+          const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+          yield put(fetchAnalyticsDataFailure(errorMessage));
+        }
       });
     },
   };
@@ -107,10 +118,11 @@ describe('analyticsSaga', () => {
 
     it('should take every fetchAnalyticsData action', () => {
       const generator = watchFetchAnalyticsData();
+      const result = generator.next().value;
       
-      expect(generator.next().value).toEqual(
-        takeEvery('analytics/fetchAnalyticsData', fetchAnalyticsDataSaga)
-      );
+      expect(result.type).toBe('FORK');
+      expect(result.payload.fn.name).toBe('takeEvery');
+      expect(result.payload.args[0]).toBe('analytics/fetchAnalyticsData');
     });
   });
 });

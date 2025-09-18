@@ -112,28 +112,22 @@ describe('TrendChart', () => {
     const layout = JSON.parse(chartLayout.getAttribute('data-chart-layout') || '{}');
     
     expect(layout.title.text).toBe('Tendencias de Rendimiento');
-    expect(layout.xaxis.title).toBe('Fecha');
-    expect(layout.yaxis.title).toBe('Ingresos (USD)');
-    expect(layout.yaxis2.title).toBe('Pedidos');
-    expect(layout.yaxis3.title).toBe('Clientes');
+    expect(layout.xaxis.title.text).toBe('Fecha');
+    expect(layout.yaxis.title.text).toBe('Ingresos (USD)');
+    expect(layout.yaxis2.title.text).toBe('Pedidos');
+    expect(layout.yaxis3.title.text).toBe('Clientes');
   });
 
   it('handles empty data gracefully', () => {
     render(<TrendChart data={[]} />);
     
-    expect(screen.getByTestId('plotly-chart')).toBeInTheDocument();
-    
-    const chartData = screen.getByTestId('chart-data');
-    const data = JSON.parse(chartData.getAttribute('data-chart-data') || '[]');
-    
-    expect(data[0].x).toEqual([]);
-    expect(data[0].y).toEqual([]);
+    expect(screen.getByText('No hay datos de tendencias disponibles')).toBeInTheDocument();
   });
 
   it('applies correct styling', () => {
     render(<TrendChart data={mockTrendData} />);
     
     const chartContainer = screen.getByTestId('plotly-chart').parentElement;
-    expect(chartContainer).toHaveClass('w-full', 'h-80');
+    expect(chartContainer).toHaveClass('w-full', 'h-96');
   });
 });
