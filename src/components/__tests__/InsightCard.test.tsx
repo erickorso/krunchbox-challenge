@@ -1,5 +1,8 @@
 import { render, screen, waitFor, act } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 import InsightCard from '../InsightCard';
+import analyticsReducer from '@/store/slices/analyticsSlice';
 
 // Mock TrendChart to avoid Plotly.js issues
 jest.mock('../TrendChart', () => {
@@ -14,6 +17,29 @@ jest.mock('../TopPerformersTable', () => {
     return <div data-testid="top-performers-table">Top Performers Table with {data.length} stores</div>;
   };
 });
+
+// Mock Redux Saga
+jest.mock('@/store/sagas/analyticsSaga', () => ({
+  watchFetchAnalyticsData: jest.fn(),
+  fetchAnalyticsDataSaga: jest.fn(),
+}));
+
+// Create test store
+const createTestStore = (initialState = {}) => {
+  return configureStore({
+    reducer: {
+      analytics: analyticsReducer,
+    },
+    preloadedState: initialState,
+  });
+};
+
+// Test wrapper component
+const createWrapper = (store: any) => {
+  return ({ children }: { children: React.ReactNode }) => (
+    <Provider store={store}>{children}</Provider>
+  );
+};
 
 // Mock the API response
 const mockApiResponse = {
@@ -57,104 +83,106 @@ const mockApiResponse = {
 global.fetch = jest.fn();
 
 describe('InsightCard', () => {
-  beforeEach(() => {
-    (fetch as jest.Mock).mockClear();
-  });
-
   it('shows loading state initially', () => {
-    (fetch as jest.Mock).mockImplementation(() => new Promise(() => {})); // Never resolves
+    const store = createTestStore({
+      analytics: {
+        data: null,
+        loading: true,
+        error: null,
+        lastFetched: null,
+      },
+    });
     
-    render(<InsightCard />);
+    render(<InsightCard />, { wrapper: createWrapper(store) });
     
     expect(screen.getByText('Cargando datos de análisis...')).toBeInTheDocument();
     expect(screen.getByText('Cargando datos de análisis...').parentElement?.querySelector('.animate-spin')).toBeInTheDocument();
   });
 
-  it('shows error state when API fails', async () => {
-    (fetch as jest.Mock).mockRejectedValue(new Error('API Error'));
-    
-    await act(async () => {
-      render(<InsightCard />);
+  it('shows error state when API fails', () => {
+    const store = createTestStore({
+      analytics: {
+        data: null,
+        loading: false,
+        error: 'API Error',
+        lastFetched: null,
+      },
     });
     
-    await waitFor(() => {
-      expect(screen.getByText('Error al cargar los datos')).toBeInTheDocument();
-      expect(screen.getByText('Ha ocurrido un error al cargar los datos de análisis.')).toBeInTheDocument();
-      expect(screen.getByText('Reintentar')).toBeInTheDocument();
-    });
+    render(<InsightCard />, { wrapper: createWrapper(store) });
+    
+    expect(screen.getByText('Error al cargar los datos')).toBeInTheDocument();
+    expect(screen.getByText('Ha ocurrido un error al cargar los datos de análisis.')).toBeInTheDocument();
+    expect(screen.getByText('Reintentar')).toBeInTheDocument();
   });
 
-  it('renders dashboard when data is loaded successfully', async () => {
-    (fetch as jest.Mock).mockResolvedValue({
-      ok: true,
-      json: async () => mockApiResponse
+  it('renders dashboard when data is loaded successfully', () => {
+    const store = createTestStore({
+      analytics: {
+        data: mockApiResponse,
+        loading: false,
+        error: null,
+        lastFetched: '2024-01-01T00:00:00Z',
+      },
     });
     
-    await act(async () => {
-      render(<InsightCard />);
-    });
+    render(<InsightCard />, { wrapper: createWrapper(store) });
     
-    await waitFor(() => {
-      expect(screen.getByText('Dashboard de Análisis de Ventas')).toBeInTheDocument();
-      expect(screen.getByText('Ingresos Totales')).toBeInTheDocument();
-      expect(screen.getByText('Tiendas con Mejor Rendimiento')).toBeInTheDocument();
-      expect(screen.getByText('Tendencias de Rendimiento')).toBeInTheDocument();
-    });
+    expect(screen.getByText('Dashboard de Análisis de Ventas')).toBeInTheDocument();
+    expect(screen.getByText('Ingresos Totales')).toBeInTheDocument();
+    expect(screen.getByText('Tiendas con Mejor Rendimiento')).toBeInTheDocument();
+    expect(screen.getByText('Tendencias de Rendimiento')).toBeInTheDocument();
   });
 
-  it('displays period information correctly', async () => {
-    (fetch as jest.Mock).mockResolvedValue({
-      ok: true,
-      json: async () => mockApiResponse
+  it('displays period information correctly', () => {
+    const store = createTestStore({
+      analytics: {
+        data: mockApiResponse,
+        loading: false,
+        error: null,
+        lastFetched: '2024-01-01T00:00:00Z',
+      },
     });
     
-    await act(async () => {
-      render(<InsightCard />);
-    });
+    render(<InsightCard />, { wrapper: createWrapper(store) });
     
-    await waitFor(() => {
-      expect(screen.getByText(/Período:/)).toBeInTheDocument();
-      expect(screen.getByText(/Última actualización:/)).toBeInTheDocument();
-    });
+    expect(screen.getByText(/Período:/)).toBeInTheDocument();
+    expect(screen.getByText(/Última actualización:/)).toBeInTheDocument();
   });
 
-  it('calls API endpoint on mount', async () => {
-    (fetch as jest.Mock).mockResolvedValue({
-      ok: true,
-      json: async () => mockApiResponse
-    });
+  it('dispatches fetchAnalyticsData on mount', () => {
+    const store = createTestStore();
+    const dispatchSpy = jest.spyOn(store, 'dispatch');
     
-    await act(async () => {
-      render(<InsightCard />);
-    });
+    render(<InsightCard />, { wrapper: createWrapper(store) });
     
-    expect(fetch).toHaveBeenCalledWith('/api/data');
+    expect(dispatchSpy).toHaveBeenCalledWith({ type: 'analytics/fetchAnalyticsData' });
+    
+    dispatchSpy.mockRestore();
   });
 
-  it('handles retry button click', async () => {
-    (fetch as jest.Mock).mockRejectedValueOnce(new Error('API Error'));
-    
-    await act(async () => {
-      render(<InsightCard />);
+  it('handles retry button click', () => {
+    const store = createTestStore({
+      analytics: {
+        data: null,
+        loading: false,
+        error: 'API Error',
+        lastFetched: null,
+      },
     });
+    const dispatchSpy = jest.spyOn(store, 'dispatch');
     
-    await waitFor(() => {
-      expect(screen.getByText('Reintentar')).toBeInTheDocument();
-    });
+    render(<InsightCard />, { wrapper: createWrapper(store) });
     
-    // Mock successful response for retry
-    (fetch as jest.Mock).mockResolvedValue({
-      ok: true,
-      json: async () => mockApiResponse
-    });
+    expect(screen.getByText('Reintentar')).toBeInTheDocument();
     
-    // Mock window.location.reload
-    const mockReload = jest.fn();
-    delete (window as any).location;
-    (window as any).location = { reload: mockReload };
+    // Click retry button
+    const retryButton = screen.getByText('Reintentar');
+    retryButton.click();
     
-    // Simulate retry by reloading (in real app, this would be a button click)
-    mockReload();
-    expect(mockReload).toHaveBeenCalled();
+    expect(dispatchSpy).toHaveBeenCalledWith({ type: 'analytics/clearError' });
+    expect(dispatchSpy).toHaveBeenCalledWith({ type: 'analytics/fetchAnalyticsData' });
+    
+    dispatchSpy.mockRestore();
   });
 });
