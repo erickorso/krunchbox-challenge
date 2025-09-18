@@ -36,14 +36,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       width: 80,
       cellRenderer: (params: any) => {
         const rank = params.value;
-        let badgeClass = 'px-2 py-1 rounded-full text-xs font-bold ';
-        
-        if (rank === 1) badgeClass += 'bg-yellow-100 text-yellow-800';
-        else if (rank === 2) badgeClass += 'bg-gray-100 text-gray-800';
-        else if (rank === 3) badgeClass += 'bg-orange-100 text-orange-800';
-        else badgeClass += 'bg-blue-100 text-blue-800';
-        
-        return `<span class="${badgeClass}">#${rank}</span>`;
+        return `#${rank}`;
       }
     },
     {
@@ -52,13 +45,13 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       width: 200,
       cellRenderer: (params: any) => {
         const store = params.data;
-        return `
-          <div>
-            <div class="font-semibold text-gray-900">${store.store_name}</div>
-            <div class="text-sm text-gray-500">${store.location}</div>
-          </div>
-        `;
+        return store.store_name;
       }
+    },
+    {
+      headerName: 'Ubicación',
+      field: 'location',
+      width: 150,
     },
     {
       headerName: 'Ingresos',
@@ -75,16 +68,12 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       },
       cellRenderer: (params: any) => {
         const revenue = params.value;
-        const formattedRevenue = new Intl.NumberFormat('en-US', {
+        return new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
           minimumFractionDigits: 0,
           maximumFractionDigits: 0,
         }).format(revenue);
-        
-        return `
-          <div class="font-semibold text-gray-900">${formattedRevenue}</div>
-        `;
       }
     },
     {
@@ -97,11 +86,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       },
       cellRenderer: (params: any) => {
         const orders = params.value;
-        const formattedOrders = new Intl.NumberFormat('en-US').format(orders);
-        
-        return `
-          <div class="font-semibold text-gray-900">${formattedOrders}</div>
-        `;
+        return new Intl.NumberFormat('en-US').format(orders);
       }
     },
     {
@@ -114,11 +99,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       },
       cellRenderer: (params: any) => {
         const customers = params.value;
-        const formattedCustomers = new Intl.NumberFormat('en-US').format(customers);
-        
-        return `
-          <div class="font-semibold text-gray-900">${formattedCustomers}</div>
-        `;
+        return new Intl.NumberFormat('en-US').format(customers);
       }
     },
     {
