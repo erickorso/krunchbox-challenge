@@ -1,0 +1,24 @@
+{
+  "name": "Krunchbox Analytics Dashboard",
+  "short_name": "Krunchbox",
+  "description": "Professional analytics dashboard built with Next.js and Redux Saga",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/icon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/Krunchbox-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["business", "productivity", "analytics"],
+  "lang": "en",
+  "orientation": "portrait-primary"
+}

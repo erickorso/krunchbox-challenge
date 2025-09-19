@@ -3,10 +3,12 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchAnalyticsData, clearError } from '@/store/slices/analyticsSlice';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ErrorBoundary } from './ErrorBoundary';
+import { MetricsSuspense, ChartSuspense, TableSuspense } from './SuspenseWrapper';
 import MetricsDisplay from './MetricsDisplay';
 import TopPerformersTable from './TopPerformersTable';
 import TrendChart from './TrendChart';
@@ -78,49 +80,54 @@ export default function InsightCard() {
 
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Dashboard de Análisis de Ventas
-          </h1>
-          <p className="text-gray-600">
-            Período: {new Date(data.period.start_date).toLocaleDateString()} - {new Date(data.period.end_date).toLocaleDateString()}
-          </p>
-          <p className="text-sm text-gray-500">
-            Última actualización: {new Date(data.last_updated).toLocaleString()}
-          </p>
-        </div>
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="mb-8">
+            <div className="mb-4">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Dashboard de Análisis de Ventas
+              </h1>
+              <p className="text-gray-600">
+                Análisis completo de rendimiento y métricas de ventas
+              </p>
+            </div>
+            <div className="bg-white rounded-lg p-4 shadow-sm border">
+              <p className="text-gray-600">
+                <span className="font-medium">Período:</span> {new Date(data.period.start_date).toLocaleDateString()} - {new Date(data.period.end_date).toLocaleDateString()}
+              </p>
+              <p className="text-sm text-gray-500">
+                <span className="font-medium">Última actualización:</span> {new Date(data.last_updated).toLocaleString()}
+              </p>
+            </div>
+          </div>
 
-        {/* Metrics Overview */}
-        <div className="mb-8">
-          <MetricsDisplay summary={data.summary} />
-        </div>
+          {/* Metrics Overview with Suspense - 500ms delay */}
+          <div className="mb-8">
+            <MetricsSuspense delay={500}>
+              <MetricsDisplay summary={data.summary} />
+            </MetricsSuspense>
+          </div>
 
-        {/* Charts and Tables Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Trend Chart */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Tendencias de Rendimiento</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <TrendChart data={data.trend_data} />
-            </CardContent>
-          </Card>
+          {/* Charts and Tables Grid with Suspense */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Trend Chart with Suspense - 1000ms delay */}
+            <Card>
+              <ChartSuspense title="Tendencias de Rendimiento" delay={1000}>
+                <TrendChart data={data.trend_data} />
+              </ChartSuspense>
+            </Card>
 
-          {/* Top Performers Table */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Tiendas con Mejor Rendimiento</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <TopPerformersTable data={data.top_performers} />
-            </CardContent>
-          </Card>
+            {/* Top Performers Table with Suspense - 1500ms delay */}
+            <Card>
+              <TableSuspense title="Tiendas con Mejor Rendimiento" delay={1500}>
+                <TopPerformersTable data={data.top_performers} />
+              </TableSuspense>
+            </Card>
+          </div>
         </div>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 }

@@ -11,8 +11,11 @@ export default function NotFound() {
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Página no encontrada
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 mb-2">
             La página que buscas no existe o ha sido movida.
+          </p>
+          <p className="text-sm text-gray-500">
+            Verifica la URL o regresa al dashboard
           </p>
         </CardHeader>
         <CardContent className="text-center">
