@@ -45,25 +45,25 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
           <Card className="w-full max-w-md">
             <CardHeader>
               <CardTitle className="text-center text-red-600">
-                ⚠️ Error en la aplicación
+                ⚠️ Application Error
               </CardTitle>
             </CardHeader>
             <CardContent className="text-center">
               <Alert className="mb-4">
                 <AlertDescription>
-                  Ha ocurrido un error inesperado. Por favor, intenta recargar la página.
+                  An unexpected error occurred. Please try reloading the page.
                 </AlertDescription>
               </Alert>
               <div className="space-y-2">
                 <Button onClick={this.resetError} className="w-full">
-                  Reintentar
+                  Retry
                 </Button>
                 <Button 
                   variant="outline" 
                   onClick={() => window.location.reload()} 
                   className="w-full"
                 >
-                  Recargar página
+                  Reload Page
                 </Button>
               </div>
             </CardContent>

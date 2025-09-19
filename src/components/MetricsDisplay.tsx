@@ -40,35 +40,35 @@ export default function MetricsDisplay({ summary }: MetricsDisplayProps) {
 
   const metrics = [
     {
-      title: 'Ingresos Totales',
+      title: 'Total Revenue',
       value: formatCurrency(summary.total_revenue),
       growth: summary.revenue_growth,
       icon: '💰',
       color: 'bg-blue-500'
     },
     {
-      title: 'Total de Pedidos',
+      title: 'Total Orders',
       value: formatNumber(summary.total_orders),
       growth: summary.orders_growth,
       icon: '📦',
       color: 'bg-green-500'
     },
     {
-      title: 'Total de Clientes',
+      title: 'Total Customers',
       value: formatNumber(summary.total_customers),
       growth: summary.customers_growth,
       icon: '👥',
       color: 'bg-purple-500'
     },
     {
-      title: 'Valor Promedio del Pedido',
+      title: 'Average Order Value',
       value: formatCurrency(summary.average_order_value),
       growth: 0, // AOV growth not provided in summary
       icon: '💳',
       color: 'bg-orange-500'
     },
     {
-      title: 'Tasa de Conversión',
+      title: 'Conversion Rate',
       value: `${summary.conversion_rate}%`,
       growth: 0, // Conversion rate growth not provided in summary
       icon: '📈',

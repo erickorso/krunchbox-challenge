@@ -1,139 +1,139 @@
 # 🚀 Krunchbox Analytics Dashboard
 
-Dashboard de análisis de ventas construido con Next.js 15, TypeScript, Redux Saga y tecnologías modernas.
+Sales analytics dashboard built with Next.js 15, TypeScript, Redux Saga and modern technologies.
 
-## ✨ Características
+## ✨ Features
 
-- **📊 Dashboard Completo** - Métricas, gráficos y tablas interactivas
-- **⚡ Next.js 15** - Framework React con App Router
-- **🔷 TypeScript** - Tipado estático para mayor robustez
-- **🔄 Redux Toolkit + Redux Saga** - Manejo de estado profesional
-- **📱 Responsive Design** - Optimizado para móvil y desktop
-- **🎨 Tailwind CSS** - Estilos modernos y consistentes
-- **📈 Plotly.js** - Gráficos interactivos de alta calidad
-- **📋 AG Grid** - Tablas de datos avanzadas
-- **🧪 Testing** - 75%+ de cobertura con Jest y RTL
+- **📊 Complete Dashboard** - Interactive metrics, charts and tables
+- **⚡ Next.js 15** - React framework with App Router
+- **🔷 TypeScript** - Static typing for greater robustness
+- **🔄 Redux Toolkit + Redux Saga** - Professional state management
+- **📱 Responsive Design** - Optimized for mobile and desktop
+- **🎨 Tailwind CSS** - Modern and consistent styles
+- **📈 Plotly.js** - High-quality interactive charts
+- **📋 AG Grid** - Advanced data tables
+- **🧪 Testing** - 75%+ coverage with Jest and RTL
 
-## 🛠️ Tecnologías
+## 🛠️ Technologies
 
 - **Frontend:** Next.js 15, React 18, TypeScript
-- **Estado:** Redux Toolkit, Redux Saga
-- **Estilos:** Tailwind CSS
-- **Gráficos:** Plotly.js
-- **Tablas:** AG Grid
+- **State:** Redux Toolkit, Redux Saga
+- **Styles:** Tailwind CSS
+- **Charts:** Plotly.js
+- **Tables:** AG Grid
 - **Testing:** Jest, React Testing Library
 - **Linting:** ESLint
 
-## 🚀 Inicio Rápido
+## 🚀 Quick Start
 
-### Prerrequisitos
+### Prerequisites
 - Node.js 18+
-- npm o yarn
+- npm or yarn
 
-### Instalación
+### Installation
 
 ```bash
-# Clonar el repositorio
+# Clone the repository
 git clone <repository-url>
 cd krunchbox-challenge
 
-# Instalar dependencias
+# Install dependencies
 npm install
 
-# Ejecutar en desarrollo
+# Run in development
 npm run dev
 
-# Abrir en el navegador
+# Open in browser
 open http://localhost:3000
 ```
 
-### Scripts Disponibles
+### Available Scripts
 
 ```bash
-# Desarrollo
-npm run dev          # Servidor de desarrollo
-npm run build        # Build de producción
-npm run start        # Servidor de producción
+# Development
+npm run dev          # Development server
+npm run build        # Production build
+npm run start        # Production server
 
 # Testing
-npm test             # Ejecutar tests
-npm run test:watch   # Tests en modo watch
-npm run test:coverage # Tests con cobertura
+npm test             # Run tests
+npm run test:watch   # Tests in watch mode
+npm run test:coverage # Tests with coverage
 
 # Linting
-npm run lint         # Ejecutar ESLint
+npm run lint         # Run ESLint
 ```
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 src/
-├── app/                    # App Router de Next.js
-│   ├── api/data/          # API interna
-│   ├── layout.tsx         # Layout principal
-│   └── page.tsx           # Página principal
-├── components/            # Componentes React
-│   ├── InsightCard.tsx    # Componente principal
-│   ├── MetricsDisplay.tsx # Métricas KPI
-│   ├── TopPerformersTable.tsx # Tabla AG Grid
-│   └── TrendChart.tsx     # Gráfico Plotly
+├── app/                    # Next.js App Router
+│   ├── api/data/          # Internal API
+│   ├── layout.tsx         # Main layout
+│   └── page.tsx           # Main page
+├── components/            # React components
+│   ├── InsightCard.tsx    # Main component
+│   ├── MetricsDisplay.tsx # KPI metrics
+│   ├── TopPerformersTable.tsx # AG Grid table
+│   └── TrendChart.tsx     # Plotly chart
 ├── store/                 # Redux store
 │   ├── slices/           # Redux slices
 │   ├── sagas/            # Redux sagas
-│   └── hooks.ts          # Hooks tipados
-├── types/                # Definiciones TypeScript
+│   └── hooks.ts          # Typed hooks
+├── types/                # TypeScript definitions
 └── providers/            # Context providers
 ```
 
-## 🎯 Funcionalidades
+## 🎯 Functionality
 
-### 📊 Métricas Principales
-- Ingresos totales con crecimiento
-- Total de pedidos
-- Total de clientes
-- Valor promedio del pedido
-- Tasa de conversión
+### 📊 Main Metrics
+- Total revenue with growth
+- Total orders
+- Total customers
+- Average order value
+- Conversion rate
 
-### 📈 Visualizaciones
-- **Gráfico de tendencias** - Series temporales con Plotly.js
-- **Tabla de tiendas** - Top performers con AG Grid
-- **Métricas KPI** - Cards con indicadores de crecimiento
+### 📈 Visualizations
+- **Trend chart** - Time series with Plotly.js
+- **Stores table** - Top performers with AG Grid
+- **KPI metrics** - Cards with growth indicators
 
-### 🔄 Estado y Datos
-- **Redux Saga** para efectos secundarios
-- **API interna** simulando endpoint de datos
-- **Manejo de estados** (loading, error, success)
-- **Tipado completo** con TypeScript
+### 🔄 State and Data
+- **Redux Saga** for side effects
+- **Internal API** simulating data endpoint
+- **State management** (loading, error, success)
+- **Complete typing** with TypeScript
 
 ## 🧪 Testing
 
-El proyecto incluye tests completos con:
-- **Jest** como test runner
-- **React Testing Library** para testing de componentes
-- **Cobertura del 75%+** en statements, branches, functions y lines
-- **Tests de Redux** (slices, sagas, hooks)
-- **Tests de API** (rutas internas)
-- **Tests de componentes** (renderizado, interacciones)
+The project includes comprehensive tests with:
+- **Jest** as test runner
+- **React Testing Library** for component testing
+- **75%+ coverage** in statements, branches, functions and lines
+- **Redux tests** (slices, sagas, hooks)
+- **API tests** (internal routes)
+- **Component tests** (rendering, interactions)
 
 ## 🚀 Deployment
 
-### Vercel (Recomendado)
+### Vercel (Recommended)
 
-1. **Conectar repositorio:**
+1. **Connect repository:**
    ```bash
-   # Instalar Vercel CLI
+   # Install Vercel CLI
    npm i -g vercel
    
    # Deploy
    vercel
    ```
 
-2. **Configuración automática:**
+2. **Automatic configuration:**
    - Framework: Next.js
    - Build Command: `npm run build`
    - Output Directory: `.next`
 
-### Variables de Entorno
+### Environment Variables
 
 ```env
 NODE_ENV=production
@@ -151,15 +151,15 @@ store                    |   100   |   100    |   100   |   100
 app/api/data             |   87.5  |   100    |   100   |  85.71
 ```
 
-## 🎨 Diseño
+## 🎨 Design
 
-- **Paleta de colores** consistente con la marca
-- **Cards con sombras** y bordes redondeados
-- **Responsive design** para todos los dispositivos
-- **Iconos emoji** para mejor UX
-- **Indicadores de crecimiento** con colores semánticos
+- **Consistent color palette** with brand
+- **Cards with shadows** and rounded borders
+- **Responsive design** for all devices
+- **Emoji icons** for better UX
+- **Growth indicators** with semantic colors
 
-## 🔧 Configuración
+## 🔧 Configuration
 
 ### ESLint
 ```json
@@ -186,26 +186,26 @@ app/api/data             |   87.5  |   100    |   100   |  85.71
 }
 ```
 
-## 📝 Notas de Desarrollo
+## 📝 Development Notes
 
-- **Redux Saga** maneja todas las llamadas a la API
-- **Dynamic imports** para Plotly.js (compatible con SSR)
-- **AG Grid modules** registrados correctamente
-- **TypeScript** estricto para type safety
-- **Error boundaries** para manejo de errores
+- **Redux Saga** handles all API calls
+- **Dynamic imports** for Plotly.js (SSR compatible)
+- **AG Grid modules** properly registered
+- **Strict TypeScript** for type safety
+- **Error boundaries** for error handling
 
-## 🤝 Contribución
+## 🤝 Contributing
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
+This project is under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-**Desarrollado con ❤️ para Krunchbox**
+**Developed with ❤️ for Krunchbox**

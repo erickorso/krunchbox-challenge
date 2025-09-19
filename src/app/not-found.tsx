@@ -9,19 +9,19 @@ export default function NotFound() {
         <CardHeader className="text-center">
           <CardTitle className="text-6xl mb-4">404</CardTitle>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            Página no encontrada
+            Page not found
           </h1>
           <p className="text-gray-600 mb-2">
-            La página que buscas no existe o ha sido movida.
+            The page you are looking for does not exist or has been moved.
           </p>
           <p className="text-sm text-gray-500">
-            Verifica la URL o regresa al dashboard
+            Check the URL or return to the dashboard
           </p>
         </CardHeader>
         <CardContent className="text-center">
           <Button asChild className="w-full">
             <Link href="/">
-              Volver al Dashboard
+              Back to Dashboard
             </Link>
           </Button>
         </CardContent>

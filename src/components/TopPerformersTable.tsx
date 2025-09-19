@@ -27,7 +27,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       }
     },
     {
-      headerName: 'Tienda',
+      headerName: 'Store',
       field: 'store_name',
       width: 200,
       cellRenderer: (params: { value: number; data: TopPerformer }) => {
@@ -36,12 +36,12 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       }
     },
     {
-      headerName: 'Ubicación',
+      headerName: 'Location',
       field: 'location',
       width: 150,
     },
     {
-      headerName: 'Ingresos',
+      headerName: 'Revenue',
       field: 'revenue',
       width: 120,
       type: 'numericColumn',
@@ -64,7 +64,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       }
     },
     {
-      headerName: 'Pedidos',
+      headerName: 'Orders',
       field: 'orders',
       width: 100,
       type: 'numericColumn',
@@ -77,7 +77,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       }
     },
     {
-      headerName: 'Clientes',
+      headerName: 'Customers',
       field: 'customers',
       width: 100,
       type: 'numericColumn',
@@ -104,7 +104,7 @@ export default function TopPerformersTable({ data }: TopPerformersTableProps) {
       }
     },
     {
-      headerName: 'Conversión',
+      headerName: 'Conversion',
       field: 'conversion_rate',
       width: 100,
       type: 'numericColumn',
