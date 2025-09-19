@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { MetricsSuspense, ChartSuspense, TableSuspense } from './SuspenseWrapper';
@@ -46,11 +47,23 @@ export default function SuspenseDemo() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              🎭 Demostración de Suspense & Skeleton Components
-            </h1>
-            <p className="text-gray-600 mb-6">
+            <div className="flex items-center justify-center mb-4">
+              <Image 
+                src="/Krunchbox-logo.svg" 
+                alt="Krunchbox Logo" 
+                width={40}
+                height={40}
+                className="mr-3"
+              />
+              <h1 className="text-3xl font-bold text-gray-900">
+                🎭 Demostración de Suspense & Skeleton Components
+              </h1>
+            </div>
+            <p className="text-gray-600 mb-2">
               Observa cómo se cargan los componentes con diferentes delays
+            </p>
+            <p className="text-sm text-gray-500 mb-6">
+              Powered by Krunchbox 2.0
             </p>
             <div className="space-x-4">
               <Button onClick={() => setShowDemo(true)}>

@@ -16,6 +16,12 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Krunchbox Analytics Dashboard",
   description: "Professional analytics dashboard built with Next.js and Redux Saga",
+  icons: {
+    icon: '/icon.ico',
+    shortcut: '/icon.ico',
+    apple: '/icon.ico',
+  },
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
