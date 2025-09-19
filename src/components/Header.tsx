@@ -8,9 +8,9 @@ export default function Header() {
     <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo y título */}
+          {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-3">
+            <Link href="/" className="flex items-center">
               <Image 
                 src="/Krunchbox-logo.svg" 
                 alt="Krunchbox Logo" 
@@ -18,14 +18,6 @@ export default function Header() {
                 height={40}
                 className="h-10 w-auto"
               />
-              <div className="hidden sm:block">
-                <h1 className="text-xl font-bold text-gray-900">
-                  Krunchbox
-                </h1>
-                <p className="text-xs text-gray-500">
-                  Analytics Dashboard
-                </p>
-              </div>
             </Link>
           </div>
 
@@ -44,13 +36,6 @@ export default function Header() {
               Demo
             </Link>
           </nav>
-
-          {/* Versión */}
-          <div className="hidden sm:flex items-center">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-              v2.0
-            </span>
-          </div>
         </div>
       </div>
     </header>
