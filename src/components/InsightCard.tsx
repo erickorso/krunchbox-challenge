@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchAnalyticsData, clearError } from '@/store/slices/analyticsSlice';
 import { Card, CardContent } from '@/components/ui/card';
@@ -86,22 +85,13 @@ export default function InsightCard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
-            <div className="flex items-center mb-4">
-              <Image 
-                src="/Krunchbox-logo.svg" 
-                alt="Krunchbox Logo" 
-                width={48}
-                height={48}
-                className="mr-4"
-              />
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">
-                  Dashboard de Análisis de Ventas
-                </h1>
-                <p className="text-sm text-gray-500">
-                  Powered by Krunchbox 2.0
-                </p>
-              </div>
+            <div className="mb-4">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Dashboard de Análisis de Ventas
+              </h1>
+              <p className="text-gray-600">
+                Análisis completo de rendimiento y métricas de ventas
+              </p>
             </div>
             <div className="bg-white rounded-lg p-4 shadow-sm border">
               <p className="text-gray-600">
