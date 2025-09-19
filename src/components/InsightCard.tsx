@@ -48,14 +48,14 @@ export default function InsightCard() {
           <CardContent className="pt-6">
             <div className="text-center">
               <div className="text-red-500 text-6xl mb-4">⚠️</div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Error al cargar los datos</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">Error loading data</h2>
               <Alert className="mb-4">
                 <AlertDescription>
-                  Ha ocurrido un error al cargar los datos de análisis.
+                  An error occurred while loading analytics data.
                 </AlertDescription>
               </Alert>
               <Button onClick={handleRetry} className="w-full">
-                Reintentar
+                Retry
               </Button>
             </div>
           </CardContent>
@@ -87,18 +87,18 @@ export default function InsightCard() {
           <div className="mb-8">
             <div className="mb-4">
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Dashboard de Análisis de Ventas
+                Sales Analytics Dashboard
               </h1>
               <p className="text-gray-600">
-                Análisis completo de rendimiento y métricas de ventas
+                Complete performance analysis and sales metrics
               </p>
             </div>
             <div className="bg-white rounded-lg p-4 shadow-sm border">
               <p className="text-gray-600">
-                <span className="font-medium">Período:</span> {new Date(data.period.start_date).toLocaleDateString()} - {new Date(data.period.end_date).toLocaleDateString()}
+                <span className="font-medium">Period:</span> {new Date(data.period.start_date).toLocaleDateString()} - {new Date(data.period.end_date).toLocaleDateString()}
               </p>
               <p className="text-sm text-gray-500">
-                <span className="font-medium">Última actualización:</span> {new Date(data.last_updated).toLocaleString()}
+                <span className="font-medium">Last updated:</span> {new Date(data.last_updated).toLocaleString()}
               </p>
             </div>
           </div>
@@ -114,14 +114,14 @@ export default function InsightCard() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Trend Chart with Suspense - 1000ms delay */}
             <Card>
-              <ChartSuspense title="Tendencias de Rendimiento" delay={1000}>
+              <ChartSuspense title="Performance Trends" delay={1000}>
                 <TrendChart data={data.trend_data} />
               </ChartSuspense>
             </Card>
 
             {/* Top Performers Table with Suspense - 1500ms delay */}
             <Card>
-              <TableSuspense title="Tiendas con Mejor Rendimiento" delay={1500}>
+              <TableSuspense title="Top Performing Stores" delay={1500}>
                 <TopPerformersTable data={data.top_performers} />
               </TableSuspense>
             </Card>

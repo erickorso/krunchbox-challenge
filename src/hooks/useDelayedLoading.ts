@@ -32,7 +32,7 @@ export function useDelayedLoading(options: UseDelayedLoadingOptions = {}) {
   };
 }
 
-// Hook específico para componentes con delay
+// Hook specifically for components with delay
 export function useComponentDelay(delay: number = 1000) {
   return useDelayedLoading({ delay, immediate: true });
 }

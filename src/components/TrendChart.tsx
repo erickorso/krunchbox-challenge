@@ -103,7 +103,7 @@ export default function TrendChart({ data }: TrendChartProps) {
     yaxis: {
       title: { 
         text: 'Revenue (USD)', 
-        standoff: 20,
+        standoff: 30,
         font: { color: '#000000', size: 12 }
       },
       titlefont: { color: '#000000' },
@@ -115,30 +115,30 @@ export default function TrendChart({ data }: TrendChartProps) {
     yaxis2: {
       title: { 
         text: 'Orders', 
-        standoff: 20,
-        font: { color: '#000000', size: 12 }
+        standoff: 15,
+        font: { color: '#000000', size: 11 }
       },
       titlefont: { color: '#000000' },
-      tickfont: { color: '#10B981' },
+      tickfont: { color: '#10B981', size: 10 },
       anchor: 'x' as const,
       overlaying: 'y' as const,
       side: 'right' as const,
-      position: 0.82,
+      position: 0.88,
       showgrid: false,
       tickformat: ',.0f'
     },
     yaxis3: {
       title: { 
         text: 'Customers', 
-        standoff: 20,
-        font: { color: '#000000', size: 12 }
+        standoff: 10,
+        font: { color: '#000000', size: 11 }
       },
       titlefont: { color: '#000000' },
-      tickfont: { color: '#8B5CF6' },
+      tickfont: { color: '#8B5CF6', size: 10 },
       anchor: 'free' as const,
       overlaying: 'y' as const,
       side: 'right' as const,
-      position: 0.92,
+      position: 0.96,
       showgrid: false,
       tickformat: ',.0f'
     },
@@ -149,7 +149,7 @@ export default function TrendChart({ data }: TrendChartProps) {
       bordercolor: '#E5E7EB',
       borderwidth: 1
     },
-    margin: { t: 100, r: 150, b: 80, l: 80 },
+    margin: { t: 100, r: 100, b: 80, l: 120 },
     plot_bgcolor: 'rgba(0,0,0,0)',
     paper_bgcolor: 'rgba(0,0,0,0)',
     hovermode: 'x unified' as const

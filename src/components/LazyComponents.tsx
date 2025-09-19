@@ -17,18 +17,18 @@ interface LazyTopPerformersTableProps {
 }
 
 export const LazyTrendChartWrapper: React.FC<LazyTrendChartProps> = (props) => (
-  <ChartSuspense title="Tendencias de Rendimiento">
+  <ChartSuspense title="Performance Trends">
     <LazyTrendChart {...props} />
   </ChartSuspense>
 );
 
 export const LazyTopPerformersTableWrapper: React.FC<LazyTopPerformersTableProps> = (props) => (
-  <TableSuspense title="Tiendas con Mejor Rendimiento">
+  <TableSuspense title="Top Performing Stores">
     <LazyTopPerformersTable {...props} />
   </TableSuspense>
 );
 
-// Componente que simula carga asíncrona
+// Component that simulates async loading
 export const AsyncDataComponent: React.FC<{ 
   children: React.ReactNode; 
   delay?: number;

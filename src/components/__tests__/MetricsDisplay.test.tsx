@@ -17,11 +17,11 @@ describe('MetricsDisplay', () => {
   it('renders all metric cards', () => {
     render(<MetricsDisplay summary={mockSummary} />);
     
-    expect(screen.getByText('Ingresos Totales')).toBeInTheDocument();
-    expect(screen.getByText('Total de Pedidos')).toBeInTheDocument();
-    expect(screen.getByText('Total de Clientes')).toBeInTheDocument();
-    expect(screen.getByText('Valor Promedio del Pedido')).toBeInTheDocument();
-    expect(screen.getByText('Tasa de Conversión')).toBeInTheDocument();
+    expect(screen.getByText('Total Revenue')).toBeInTheDocument();
+    expect(screen.getByText('Total Orders')).toBeInTheDocument();
+    expect(screen.getByText('Total Customers')).toBeInTheDocument();
+    expect(screen.getByText('Average Order Value')).toBeInTheDocument();
+    expect(screen.getByText('Conversion Rate')).toBeInTheDocument();
   });
 
   it('formats currency values correctly', () => {
@@ -124,7 +124,7 @@ describe('MetricsDisplay', () => {
     render(<MetricsDisplay summary={mockSummary} />);
     
     // With shadcn/ui Card, we check for the card structure instead of specific classes
-    const metricCards = screen.getAllByText(/Ingresos Totales|Total de Pedidos|Total de Clientes|Valor Promedio del Pedido|Tasa de Conversión/);
+    const metricCards = screen.getAllByText(/Total Revenue|Total Orders|Total Customers|Average Order Value|Conversion Rate/);
     metricCards.forEach(card => {
       // Check that the card is rendered (shadcn/ui Card component)
       expect(card.closest('[data-testid="card"]') || card.closest('div')).toBeInTheDocument();
@@ -135,11 +135,11 @@ describe('MetricsDisplay', () => {
     render(<MetricsDisplay summary={mockSummary} />);
     
     const requiredMetrics = [
-      'Ingresos Totales',
-      'Total de Pedidos', 
-      'Total de Clientes',
-      'Valor Promedio del Pedido',
-      'Tasa de Conversión'
+      'Total Revenue',
+      'Total Orders', 
+      'Total Customers',
+      'Average Order Value',
+      'Conversion Rate'
     ];
     
     requiredMetrics.forEach(metric => {

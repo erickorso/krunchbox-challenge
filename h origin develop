@@ -1,0 +1,5 @@
+[33m0ea8de4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m)[m refactor: clean up header design
+[33m731615c[m[33m ([m[1;31morigin/develop[m[33m)[m feat: add fixed header with Krunchbox logo
+[33m39d6678[m feat: add Krunchbox branding and favicon
+[33m09acaba[m feat: implement React Suspense with Skeleton components and delays
+[33md6486c6[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m fix: simplify vercel.json configuration

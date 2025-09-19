@@ -39,9 +39,9 @@ describe('TrendChart', () => {
     const data = JSON.parse(chartData.getAttribute('data-chart-data') || '[]');
     
     expect(data).toHaveLength(3); // revenue, orders, customers
-    expect(data[0].name).toBe('Ingresos');
-    expect(data[1].name).toBe('Pedidos');
-    expect(data[2].name).toBe('Clientes');
+    expect(data[0].name).toBe('Revenue');
+    expect(data[1].name).toBe('Orders');
+    expect(data[2].name).toBe('Customers');
   });
 
   it('extracts dates correctly', () => {
@@ -111,17 +111,17 @@ describe('TrendChart', () => {
     const chartLayout = screen.getByTestId('chart-layout');
     const layout = JSON.parse(chartLayout.getAttribute('data-chart-layout') || '{}');
     
-    expect(layout.title.text).toBe('Tendencias de Rendimiento');
-    expect(layout.xaxis.title.text).toBe('Fecha');
-    expect(layout.yaxis.title.text).toBe('Ingresos (USD)');
-    expect(layout.yaxis2.title.text).toBe('Pedidos');
-    expect(layout.yaxis3.title.text).toBe('Clientes');
+    expect(layout.title.text).toBe('Performance Trends');
+    expect(layout.xaxis.title.text).toBe('Date');
+    expect(layout.yaxis.title.text).toBe('Revenue (USD)');
+    expect(layout.yaxis2.title.text).toBe('Orders');
+    expect(layout.yaxis3.title.text).toBe('Customers');
   });
 
   it('handles empty data gracefully', () => {
     render(<TrendChart data={[]} />);
     
-    expect(screen.getByText('No hay datos de tendencias disponibles')).toBeInTheDocument();
+    expect(screen.getByText('No trend data available')).toBeInTheDocument();
   });
 
   it('applies correct styling', () => {

@@ -47,17 +47,17 @@ export default function SuspenseDemo() {
           {/* Header */}
           <div className="mb-8 text-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              🎭 Demostración de Suspense & Skeleton Components
+              🎭 Suspense & Skeleton Components Demo
             </h1>
             <p className="text-gray-600 mb-2">
-              Observa cómo se cargan los componentes con diferentes delays
+              Watch how components load with different delays
             </p>
             <p className="text-sm text-gray-500 mb-6">
-              Experiencia de carga moderna con React Suspense
+              Modern loading experience with React Suspense
             </p>
             <div className="space-x-4">
               <Button onClick={() => setShowDemo(true)}>
-                {showDemo ? 'Reiniciar Demo' : 'Iniciar Demo'}
+                {showDemo ? 'Restart Demo' : 'Start Demo'}
               </Button>
               <Button variant="outline" onClick={resetDemo}>
                 Reset Demo
@@ -67,24 +67,24 @@ export default function SuspenseDemo() {
 
           {showDemo && (
             <>
-              {/* Métricas - 500ms */}
+              {/* Metrics - 500ms */}
               <div className="mb-8">
                 <h2 className="text-xl font-semibold mb-4 text-center">
-                  📊 Métricas (500ms delay)
+                  📊 Metrics (500ms delay)
                 </h2>
                 <MetricsSuspense delay={500}>
                   <MetricsDisplay summary={mockData.summary} />
                 </MetricsSuspense>
               </div>
 
-              {/* Gráfico y Tabla - 1000ms y 1500ms */}
+              {/* Chart and Table - 1000ms and 1500ms */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div>
                   <h2 className="text-xl font-semibold mb-4 text-center">
-                    📈 Gráfico (1000ms delay)
+                    📈 Chart (1000ms delay)
                   </h2>
                   <Card>
-                    <ChartSuspense title="Tendencias de Rendimiento" delay={1000}>
+                    <ChartSuspense title="Performance Trends" delay={1000}>
                       <TrendChart data={mockData.trend_data} />
                     </ChartSuspense>
                   </Card>
@@ -92,38 +92,38 @@ export default function SuspenseDemo() {
 
                 <div>
                   <h2 className="text-xl font-semibold mb-4 text-center">
-                    📋 Tabla (1500ms delay)
+                    📋 Table (1500ms delay)
                   </h2>
                   <Card>
-                    <TableSuspense title="Tiendas con Mejor Rendimiento" delay={1500}>
+                    <TableSuspense title="Top Performing Stores" delay={1500}>
                       <TopPerformersTable data={mockData.top_performers} />
                     </TableSuspense>
                   </Card>
                 </div>
               </div>
 
-              {/* Información sobre los delays */}
+              {/* Information about delays */}
               <div className="mt-12">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-center">ℹ️ Información sobre los Delays</CardTitle>
+                    <CardTitle className="text-center">ℹ️ Information about Delays</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                       <div className="p-4 bg-blue-50 rounded-lg">
-                        <h3 className="font-semibold text-blue-800">Métricas</h3>
+                        <h3 className="font-semibold text-blue-800">Metrics</h3>
                         <p className="text-blue-600">500ms delay</p>
-                        <p className="text-sm text-blue-500">Carga más rápida</p>
+                        <p className="text-sm text-blue-500">Faster loading</p>
                       </div>
                       <div className="p-4 bg-green-50 rounded-lg">
-                        <h3 className="font-semibold text-green-800">Gráfico</h3>
+                        <h3 className="font-semibold text-green-800">Chart</h3>
                         <p className="text-green-600">1000ms delay</p>
-                        <p className="text-sm text-green-500">Carga intermedia</p>
+                        <p className="text-sm text-green-500">Medium loading</p>
                       </div>
                       <div className="p-4 bg-purple-50 rounded-lg">
-                        <h3 className="font-semibold text-purple-800">Tabla</h3>
+                        <h3 className="font-semibold text-purple-800">Table</h3>
                         <p className="text-purple-600">1500ms delay</p>
-                        <p className="text-sm text-purple-500">Carga más lenta</p>
+                        <p className="text-sm text-purple-500">Slower loading</p>
                       </div>
                     </div>
                   </CardContent>
