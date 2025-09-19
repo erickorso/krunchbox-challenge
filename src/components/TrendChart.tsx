@@ -39,7 +39,7 @@ export default function TrendChart({ data }: TrendChartProps) {
         y: revenue,
         type: 'scatter' as const,
         mode: 'lines+markers' as const,
-        name: 'Ingresos',
+        name: 'Revenue',
         yaxis: 'y' as const,
         line: {
           color: '#3B82F6',
@@ -55,7 +55,7 @@ export default function TrendChart({ data }: TrendChartProps) {
         y: orders,
         type: 'scatter' as const,
         mode: 'lines+markers' as const,
-        name: 'Pedidos',
+        name: 'Orders',
         yaxis: 'y2' as const,
         line: {
           color: '#10B981',
@@ -71,7 +71,7 @@ export default function TrendChart({ data }: TrendChartProps) {
         y: customers,
         type: 'scatter' as const,
         mode: 'lines+markers' as const,
-        name: 'Clientes',
+        name: 'Customers',
         yaxis: 'y3' as const,
         line: {
           color: '#8B5CF6',
@@ -87,21 +87,23 @@ export default function TrendChart({ data }: TrendChartProps) {
 
   const layout = useMemo(() => ({
     title: {
-      text: 'Tendencias de Rendimiento',
-      font: { size: 16, color: '#374151' },
-      x: 0.1, // Mover el título hacia la derecha
-      xanchor: 'left' as const
+      text: 'Performance Trends',
+      font: { size: 18, color: '#374151' },
+      x: 0.5, // Center the title
+      xanchor: 'center' as const,
+      y: 0.95,
+      yanchor: 'top' as const
     },
     xaxis: {
-      title: { text: 'Fecha' },
+      title: { text: 'Date' },
       showgrid: true,
       gridcolor: '#E5E7EB',
       tickformat: '%d/%m'
     },
     yaxis: {
       title: { 
-        text: 'Ingresos (USD)', 
-        standoff: 5,
+        text: 'Revenue (USD)', 
+        standoff: 20,
         font: { color: '#000000', size: 12 }
       },
       titlefont: { color: '#000000' },
@@ -112,8 +114,8 @@ export default function TrendChart({ data }: TrendChartProps) {
     },
     yaxis2: {
       title: { 
-        text: 'Pedidos', 
-        standoff: 5,
+        text: 'Orders', 
+        standoff: 20,
         font: { color: '#000000', size: 12 }
       },
       titlefont: { color: '#000000' },
@@ -121,13 +123,14 @@ export default function TrendChart({ data }: TrendChartProps) {
       anchor: 'x' as const,
       overlaying: 'y' as const,
       side: 'right' as const,
+      position: 0.82,
       showgrid: false,
       tickformat: ',.0f'
     },
     yaxis3: {
       title: { 
-        text: 'Clientes', 
-        standoff: 5,
+        text: 'Customers', 
+        standoff: 20,
         font: { color: '#000000', size: 12 }
       },
       titlefont: { color: '#000000' },
@@ -135,7 +138,7 @@ export default function TrendChart({ data }: TrendChartProps) {
       anchor: 'free' as const,
       overlaying: 'y' as const,
       side: 'right' as const,
-      position: 0.95,
+      position: 0.92,
       showgrid: false,
       tickformat: ',.0f'
     },
@@ -146,7 +149,7 @@ export default function TrendChart({ data }: TrendChartProps) {
       bordercolor: '#E5E7EB',
       borderwidth: 1
     },
-    margin: { t: 80, r: 120, b: 50, l: 50 },
+    margin: { t: 100, r: 150, b: 80, l: 80 },
     plot_bgcolor: 'rgba(0,0,0,0)',
     paper_bgcolor: 'rgba(0,0,0,0)',
     hovermode: 'x unified' as const
@@ -162,7 +165,7 @@ export default function TrendChart({ data }: TrendChartProps) {
     return (
       <div className="flex items-center justify-center h-96 text-gray-500">
         <div className="text-center">
-          <p>No hay datos de tendencias disponibles</p>
+          <p>No trend data available</p>
         </div>
       </div>
     );

@@ -8,6 +8,13 @@ jest.mock('../../providers/ReduxProvider', () => {
   };
 });
 
+// Mock Header
+jest.mock('../../components/Header', () => {
+  return function MockHeader() {
+    return <div data-testid="header">Header</div>;
+  };
+});
+
 // Mock fonts
 jest.mock('next/font/google', () => ({
   Geist: () => ({
@@ -28,6 +35,7 @@ describe('RootLayout', () => {
     
     expect(screen.getByTestId('test-child')).toBeInTheDocument();
     expect(screen.getByTestId('redux-provider')).toBeInTheDocument();
+    expect(screen.getByTestId('header')).toBeInTheDocument();
   });
 
   it('renders without crashing', () => {
